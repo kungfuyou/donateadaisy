@@ -9,4 +9,5 @@ phpinfo.php
 /php/justgiving/phpinfo.php
 /php/justgiving/sdi-example.php
 /php/auth.php
+*.DS_Store
 
