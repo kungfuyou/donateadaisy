@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Donate a Daisy - For Cancer Connections</title>
+		<meta name="description" content="Add a Daisy to the Cancer Connections Daisy Chain. Make a donation and help friends, family and loved ones suffering from cancer.">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<link rel="stylesheet" href="css/donateadaisy.css">
+		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+	</head>
+	<body>
+
+		<!--[if lt IE 7]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<div id="content">
+
+		   <div id="introBG">
+		   </div>
+
+			<div id="logo">
+				<img src='img/dd_logo.png' alt='donate a daisy for Cancer Connections' />
+			</div>
+			
+			<div id="raisedAmountMessage">
+				<div class="blue pill">Total Donations</div>
+				<div id="raisedAmount">£0.00</div>
+			</div>
+		</div>
+
+		<!-- Templates -->
+		<script type="text/x-handlebars-template" id="loadingChain">
+			<div id="loading">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<div class="loadingText">loading...</div>
+			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="daisyChainTemplate">
+
+			<div id="daisyChainMaster">
+
+				<div id="daisyChainContainer">
+					<ul id="daisyChain">
+						<li class="add"></li>
+						{{#each daisies}}
+						<li id='daisy-{{id}}'>
+							<img src="img/daisy-head.png" class="daisy">
+							<div class="daisyInfo">
+								<div class="name">{{donorDisplayName}}</div>
+								<ul class="info clearfix">
+									<li class="{{checkMessage message}}" id="msg-{{id}}">&nbsp;</li>
+									<li class="pill cream number">{{id}}</li>
+									<li class="share">&nbsp;</li>
+								</ul>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+				</div>
+
+				<div id="rearChainContainer" class="iScrollLoneScrollbar">
+					<div id="rearChain"></div>
+				</div>
+
+			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="messageModal">
+
+			<div id="messageContainer">
+				<div id="messageHeader">
+					Daisy #{{daisyIndex}}
+				</div>
+				<div id="message">
+					{{message}}
+				</div>
+				<div id="messageFooter">
+					<span class="name">{{name}}</span>
+					<span class="date">{{date}}</span>
+				</div>
+				<ul class="messageButtons">
+					<li class="close">x</li>
+					<li class="add">+</li>
+					<li class="share"> </li>
+				</ul>
+			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="textSlidesTemplate">
+
+			<div id="introSlides" class="textSlides">
+
+				<div class="timerContainer">
+					<div class="timer timer-left t1">
+						<div class="mask"></div>
+					</div>
+					<div class="timer timer-left t2">
+						<div class="mask"></div>
+					</div>
+					<div class="timer timer-right">
+						<div class="mask"></div>
+					</div>
+				</div>
+
+				<div id="slideIndicator"></div>
+
+				<ul class="textSlideList">
+				{{#each textSlides}}
+					<li id='slide-{{id}}'>{{content}}</li>
+				{{/each}}
+				</ul>
+				<a href='javascript:void(0)' class='button button-close'>Skip</a>
+			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="introTemplate">
+			
+			<div id="intro" class="is-hidden">
+				<div id="introFlower">
+					<img src="img/logo-flower.png" />
+				</div>
+				<div id="introShadow">
+					<img src="img/logo-shadow.png" />
+				</div>
+				<div id="introDonate" class="introText">
+					<img src="img/logo-donatetext.png">
+				</div>
+				 <div id="introCC" class="introText">
+					<img src="img/logo-cctext.png">
+				</div>
+			</div>
+		</script>
+		
+		<!-- Includes -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+		<script src="js/vendor/handlebars-v2.0.0.js"></script>
+		<script src="js/vendor/velocity.min.js"></script>
+		<script src="js/vendor/velocity.ui.min.js"></script>
+		<script src="js/vendor/jquery.blast.min.js"></script>
+		<script src="js/vendor/iscroll-probe.js"></script>
+
+		<!-- Handlebars Helpers -->
+		<script type="text/javascript">
+			$(document).ready(function(){
+				Handlebars.registerHelper("checkMessage", function(message) {
+				  if(message == '' || message == null){
+				  	return 'noMessage';
+				  } else {
+				  	return 'message';
+				  }
+				});
+
+			})
+		</script>
+
+		<!-- App -->
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/main.js"></script>
+
+		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
+		<script>
+			(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+			function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+			e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+			e.src='//www.google-analytics.com/analytics.js';
+			r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+			ga('create','UA-XXXXX-X');ga('send','pageview');
+		</script>
+		-->
+	</body>
+</html>
