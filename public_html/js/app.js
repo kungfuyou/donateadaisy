@@ -669,7 +669,6 @@ app.fb = {};
 		
 
 		$('.fb').on("click" , function(e){
-			e.stopPropagation();
 			console.log('facecook');
 			//var fbLoginStatus = app.fb.shareDaisy();
 		});
@@ -677,14 +676,6 @@ app.fb = {};
 		//Create Twitter Button
 		var twitterSelector = document.getElementById('twitterButton');
 		twttr.widgets.load(twitterSelector);
-
-		$('.messageButtons li ul li a').on("click" , function(e){
-			e.stopPropagation()
-			console.log('nightmare too');
-			
-		});
-
-		
 	}
 
 	obj.setRaisedAmount = function(totalRaised){
