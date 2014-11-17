@@ -86,7 +86,7 @@ body {
 
 #introBG {
 
-	display: none;
+	//display: none;
 
  	.transition(all 500ms cubic-bezier(0.45, 0, 0.75, 0.38));
 
@@ -236,9 +236,9 @@ body {
 }
 
 /* ---------- Intro Text Slides -------- */
-.textSlides {
+.textSlidesContainer {
 
-	background: rgba(255,255,255,0.2);
+	background: lighten(@green-grass, 10%) ;
 	display: block;
 	height: 135px;
 	margin: 0 auto;
@@ -247,7 +247,6 @@ body {
 	position: relative;
 	top: 40%;
 	width: 520px;
-	z
 
 	ul {
 
@@ -496,15 +495,16 @@ body {
 
 	    		.daisyInfo {
 
+					background: url('@{img-path}daisy-shadow.png') no-repeat center center;
+					color: #fff;
+					font-family: @fontface-roboto-light;
+					font-size: 12px;
 					left: -5px;
 					position: absolute;
 					text-align: center;
+					text-transform: uppercase;
 					top: 160px;
 					width: 188px;
-					font-size: 12px;
-					text-transform: uppercase;
-					color: #fff;
-					font-family: @fontface-roboto-light;
 
 					.name{
 						width: 100%;
@@ -553,14 +553,115 @@ body {
 
 							&.share {
 
-								background: url('@{img-path}daisychain-icons.png') no-repeat -9px -77px;
 								width: 20px;
+								position: relative;
 
-								&:hover {
+								button {
 
-									background-position: -9px -113px;
-									cursor: pointer;
+									background: url('@{img-path}daisychain-icons.png') no-repeat -9px -78px;
+									border: medium none;
+								    height: 24px;
+								    margin: 0;
+								    padding: 0;
+								    vertical-align: top;
+								    width: 20px;
+
+									&:hover {
+
+										background-position: -9px -114px;
+										cursor: pointer;	
+									}
+
+									&.open {
+
+										background-position: -9px -330px;
+										cursor: pointer;
+									}
 								}
+							}
+						}
+
+						.socialPopup {
+
+							.rounded(5px); 
+							.box-shadow(0 0 5px 0 rgba(0, 0, 0, 0.6));
+							.transform-origin(50% 50%);
+
+						    background: none repeat scroll 0 0 rgba(255,255,255,0.9);
+						    height: 42px;
+						    left: 50%;
+						    margin: 0 0 0 -42px;
+						    padding: 0;
+						    position: absolute;
+						    bottom: 32px;
+						    width: 88px;
+						    z-index: 999;
+						    overflow: hidden;
+						    white-space:nowrap;
+						    opacity: 0;
+
+						    li {
+
+							    background: url('@{img-path}social-icons-32px.png') no-repeat scroll 0 0 transparent;
+							    display: inline-block;
+							    height: 32px;
+							    line-height: normal;
+							    margin: 5px;
+							    padding: 0;
+							    width: 32px;
+							    cursor: pointer;
+
+
+							    &.fb {
+
+							    	background-position: center 0;
+
+							    	&:hover {
+
+							    		background-position: center -34px;
+							    	}
+							    }
+
+							    &.twitter {
+
+							    	background-position: center -68px;
+
+							    	a {
+							    		display: block;
+							    		height: 32px;
+							    		width : 32px;
+							    	}
+
+							    	&:hover {
+
+							    		background-position: center -102px;
+							    	}
+							    }
+							}
+
+							&:after {
+
+							    
+							    border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+							    border-image: none;
+							    border-style: solid;
+							    border-width: 8px;
+							    bottom: -8px;
+							    content: "";
+							    display: block;
+							    height: 0;
+							    left: 50%;
+							    margin-left: -8px;
+							    position: absolute;	
+							    width: 0;
+							    .transition(all 0.15s);
+							}
+
+							&.visible{
+
+								&:after {
+							    	bottom: -16px;
+							    }
 							}
 						}
 					}
@@ -704,13 +805,63 @@ body {
 	    		}
 	    	}
 
-	    	&.share {
+	    	&.social {
 
 	    		background-position: -1px -73px;
 
 	    		&:hover {
 	    			
 	    			background-position: -1px -109px;
+	    		}
+
+	    		&.open {
+
+	    			background-position: -1px -325px;
+	    		}
+
+	    		.socialPopup {
+
+	    			margin: 0;
+				    padding: 0;
+				    position: relative;
+				    top: 34px;
+
+				    &:first-child {
+				    	border-top: 1px solid #fff;
+				    }
+
+				    li {
+
+				    	background: url('@{img-path}social-icons-24px.png') no-repeat center 0 rgba(255,255,255,0.6);
+				    	border-bottom: none;
+
+				    	&.fb {
+
+				    		background-position: center 0;
+
+				    		&:hover {
+
+				    			background-position: center -34px;
+				    		}
+
+				    	}
+
+				    	&.twitter {
+
+				    		background-position: center -67px;
+
+				    		a {
+				    			display: block;
+				    			width: 34px;
+				    			height: 34px;
+				    		}
+
+				    		&:hover {
+
+				    			background-position: center -101px;
+				    		}
+				    	}
+				    }
 	    		}
 	    	}
 	    }
@@ -801,6 +952,9 @@ body {
 	    text-align: center;
 	}
 }
+
+/* ---------- Social Popup ----------- */
+
 
 @-webkit-keyframes loading {
 

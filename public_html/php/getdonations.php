@@ -79,5 +79,6 @@ if( $donationsObject = getDonationsObject($pageSize , 1) ){
 
 	$result = array("status"=>"error", "data"=>"Could not retrieve donations from server");
 }
+
 echo json_encode($result);
 ?>

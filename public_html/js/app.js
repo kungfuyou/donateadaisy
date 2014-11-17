@@ -7,10 +7,10 @@ app.helpers = {};
 app.pieTimer = {};
 app.daisyChain = {};
 app.loading = {};
+app.fb = {};
 
 // -------- Helpers ---------  //
 (function(){
-
 	var obj = this;
 }).apply(app.helpers);
 
@@ -123,7 +123,7 @@ app.loading = {};
 		app.modal.showModal();
 	},
 	app.textSlides.startSlideshow = function(){
-		var slides = $('.textSlideList li');
+		var slides = $('.textSlides li');
 		var numSlides = slides.length;
 		var slideSequence = [];
 		var slideDuration = 1000;
@@ -396,10 +396,9 @@ app.loading = {};
 	var daisyWrapper = '#daisyChainContainer';
 	var rearChain = '#rearChainContainer';
 	var daisyChain = '#daisyChain';
-	var auth = "Basic YWxleC5tb29yZUBrdW5nZnV5b3UuY29tOmhpcjBzaGlnZQ==";
-	var root = "https://api-sandbox.justgiving.com/8eddfca9/v1/fundraising/pages/";
 	var messageTemplate = '#messageModal';
 	var daisyContainerTemplate = '#daisyChainTemplate';
+	var socialPopupClass = '.socialPopup';
 	var windowWidth;
 	var daisyWidth; // adjust for the negative margin
 	var startHeightPercent;
@@ -429,7 +428,7 @@ app.loading = {};
 
 		var getDonationJSON = $.ajax({
 
-			url : '../php/getdonations.php',
+			url : 'php/getdonations.php',
 			contentType : 'application/json',
 			error : function(result){
 				console.log(result.status + " : " + result.data);
@@ -475,7 +474,7 @@ app.loading = {};
 
 		var getTotalRaised = $.ajax({
 
-			url : '../php/getTotal.php',
+			url : 'php/getTotal.php',
 			contentType : 'application/json',
 			error : function(result){
 				console.log(result.status + " : " + result.data);
@@ -498,7 +497,6 @@ app.loading = {};
 
 	obj.initDaisyOnScroll = function(){
 
-		windowWidth = $(window).innerWidth();
 		daisyWidth = 320 - 130; // adjust for the negative margin
 		/* Height */
 		startHeightPercent = 0.5;
@@ -533,12 +531,12 @@ app.loading = {};
 				el: rearChain,
 				fade: false,
 				ignoreBoundaries: true,
-		        interactive: false,
-		        listenX: true,
-		        listenY: false,
-		        resize: false,
-		        shrink: false,
-		        speedRatioX: 0.05,
+				interactive: false,
+				listenX: true,
+				listenY: false,
+				resize: false,
+				shrink: false,
+				speedRatioX: 0.05,
 			}]
 		});
 
@@ -548,6 +546,8 @@ app.loading = {};
 	}
 
 	obj.resizeDaisyOnScroll = function(){
+
+		windowWidth = $(window).innerWidth();
 
 		var scrollWidth = -obj.daisyScroll.x;
 		var viewCentre = scrollWidth + (windowWidth/2);
@@ -588,9 +588,8 @@ app.loading = {};
 	}
 
 	obj.addDaisyDependencies = function(){
-
-		//Add dependencies
-		console.log('is this added loads of times??');
+		
+		var resizeId;
 
 		obj.daisyScroll.on('scroll' , function(){
 
@@ -607,42 +606,35 @@ app.loading = {};
 			isScrolling = false;
 		});
 
-		var resizeId;
-
 		$(window).on('resize' , function(){
 			clearTimeout(resizeId);
-			resizeId = setTimeout(obj.initDaisyOnScroll, 500);
+			resizeId = setTimeout(obj.resizeDaisyOnScroll, 500);
 		});
 
-		$("#daisyChain").on('click' , '.daisy , .info .message' , function(){
+		$("#daisyChain").on('click' , '.daisy-message , .info .message' , function(){
 			
 			if(!isScrolling){
+				obj.closeShareBubble();
 				obj.showDaisyMessage(this);
 			}
 		});
-	}
 
-	obj.setRaisedAmount = function(totalRaised){
-	
-		$('#raisedAmount').html(totalRaised);
-	}
+		$("#daisyChain").on('click' , '.social' , function(){
+			
+			var clicked = $(this);
+			var appendTo = clicked.parent('li');
 
-	obj.showDaisyMessage = function(daisy){
-		console.log(daisy);
-		var messageId = $(daisy).parents('li').attr('data-index');
+			if( clicked.hasClass('open') ){
+				
+				obj.closeShareBubble();
 
-		//add template to the modal BG DOM
-		var templateSource = $(messageTemplate).html();
-		var template = Handlebars.compile(templateSource);
-		var templateContent = template({
-			message : 'hello',
-			name : 'Platic Bertrand',
-			date : '10/10/1010',
-			daisyIndex : 257
+			} else {
+
+				obj.closeShareBubble();
+				obj.loadShareBubble(clicked, appendTo);
+				obj.daisyChainShareBubbleAnim(clicked);
+			}
 		});
-		//Fire the modal
-		app.modal.modal(templateContent);
-		obj.addMessageDependencies();
 	}
 
 	obj.addMessageDependencies = function(){
@@ -655,11 +647,249 @@ app.loading = {};
 			console.log('add');
 		});
 		/* Message Share Button Behaviour */
-		$("#messageContainer").on('click' , '.messageButtons .share' , function(){
-			console.log('share');
+		$("#messageContainer").on('click' , '.messageButtons .social' , function(){
+
+			var clicked = $(this);
+
+			if(clicked.hasClass('open') ){
+				
+				obj.closeShareBubble();
+
+			} else {
+
+				obj.closeShareBubble();
+				obj.loadShareBubble(clicked , null);
+				obj.messageShareBubbleAnim(clicked);
+			}
 		});
 	}
+
+	obj.addShareDependencies = function(){
+		
+		
+
+		$('.fb').on("click" , function(e){
+			e.stopPropagation();
+			console.log('facecook');
+			//var fbLoginStatus = app.fb.shareDaisy();
+		});
+
+		//Create Twitter Button
+		var twitterSelector = document.getElementById('twitterButton');
+		twttr.widgets.load(twitterSelector);
+
+		$('.messageButtons li ul li a').on("click" , function(e){
+			e.stopPropagation()
+			console.log('nightmare too');
+			
+		});
+
+		
+	}
+
+	obj.setRaisedAmount = function(totalRaised){
+	
+		$('#raisedAmount').html(totalRaised);
+	}
+
+	obj.loadShareBubble = function(clicked, appendTo){
+		
+		appendTo = appendTo || clicked;
+
+		var daisyIndex = obj.getDaisyIndex(appendTo);
+		var donationID = obj.getDonationId(daisyIndex);
+		var donorDisplayName = obj.getDonorDisplayName(donationID);
+		var twitterMessage = donorDisplayName  + " added daisy no." + daisyIndex + " to Cancer Connections daisy chain. Donate a Daisy!"
+		var twitterUrl = "http://donateadaisy.org";
+		var templateSource = $(socialPopupTemplate).html();
+		var template = Handlebars.compile(templateSource);
+		var templateContent = template({
+			message : encodeURI(twitterMessage),
+			url : encodeURIComponent(twitterUrl)
+		});
+
+		appendTo.append(templateContent);
+		clicked.addClass('open');
+	}
+
+	obj.daisyChainShareBubbleAnim = function(clicked){
+		
+		clicked.siblings(socialPopupClass).velocity({
+
+			opacity : [1 , 0],
+			scale: [1, 0]	
+		},{
+			duration: 300,
+			easing: "easeOutQuart",
+			complete: function(el){
+				//Show the :after arrow
+				$(el).css({'overflow' : 'visible'}).delay(1).queue(function(){
+					$(this).addClass('visible').dequeue();
+				});
+				// add button dependencies
+				obj.addShareDependencies();
+			}
+		});
+	}
+
+	obj.messageShareBubbleAnim = function(clicked){
+
+		clicked.children(socialPopupClass).velocity(
+
+			"slideDown",
+			
+			{
+				duration: 300,
+				easing: "easeOutQuart",
+				complete: function(el){
+					// add button dependencies
+					obj.addShareDependencies();
+				}
+			}
+		)
+	};
+
+	obj.closeShareBubble = function(){
+
+		$('.social').removeClass('open');
+		$(socialPopupClass).remove();
+	}
+
+	obj.showDaisyMessage = function(daisy){
+
+		var daisyIndex = $(daisy).parents('li.daisyContainer').index() - 1;
+		var message = daisyData[daisyIndex].message;
+		var donationDate = daisyData[daisyIndex].donationDate;
+		var donorDisplayName = obj.getDonorDisplayName(daisyIndex);
+		var donationID = obj.getDonationId(daisyIndex);
+		//add template to the modal BG DOM
+		var templateSource = $(messageTemplate).html();
+		var template = Handlebars.compile(templateSource);
+		var templateContent = template({
+			message : message,
+			name : donorDisplayName,
+			date : donationDate,
+			daisyIndex : donationID
+		});
+		//Fire the modal
+		app.modal.modal(templateContent);
+		obj.addMessageDependencies();
+	}
+
+	obj.getDaisyIndex = function(elem){
+
+		var daisyIndex = elem.attr('data-daisyindex');
+		return daisyIndex;
+	}
+
+	obj.getDonationId = function(daisyIndex){
+
+		return daisyData.length - daisyIndex;
+	}
+
+	obj.getDonorDisplayName = function(index){
+
+		return daisyData[index].donorDisplayName;
+	}
+
 }).apply(app.daisyChain);
+
+// -------- FaceBook API --------//
+(function(){
+
+	var obj = this;
+	var status;
+	var accessToken;
+	var signedRequest;
+	var userID;
+
+	obj.init = function(){
+
+		window.fbAsyncInit = function() {
+		   
+		   FB.init({
+			  appId      : '309471525924684',
+			  status 	: true,
+			  xfbml      : true,
+			  version    : 'v2.2'
+			});
+		  };
+
+		  (function(d, s, id){
+			 var js, fjs = d.getElementsByTagName(s)[0];
+			 if (d.getElementById(id)) {return;}
+			 js = d.createElement(s); js.id = id;
+			 js.src = "//connect.facebook.net/en_US/sdk.js";
+			 fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+	}
+
+	obj.shareDaisy = function(){
+
+		FB.getLoginStatus(function(response) {
+			obj.checkStatus(response);
+		});
+	}
+
+	obj.checkStatus = function(response) {
+
+		status = response.status //connected , not_authorized, unknown.
+		console.log(status); 
+
+		if(status == 'connected'){
+
+			//Get the auth Response
+			authResponse = response.authResponse;
+			accessToken = authResponse.accessToken;
+			signedRequest = authResponse.signedRequest;
+			userID = authResponse.userID;
+
+			console.log('accessToken : ' + accessToken);
+			console.log('signedRequest : ' + signedRequest);
+			console.log('userID : ' + userID);
+
+			FB.ui({
+				method : 'share_open_graph',
+				action_type : 'donateadaisy:share',
+				action_properties : JSON.stringify({
+					//daisy : 'http://samples.ogp.me/309472862591217',
+					daisy : 'http://kungfuyou.com/donateadaisy',
+					image : 'http://kungfuyou.com/donateadaisy/img/daisy-head.png' ,
+					daisy_id : 4,
+					message : 'the daisy message goes here',
+					title : 'Use this as a title'
+				})
+			});
+
+			/* FB.api(
+				'me/objects/donateadaisy:daisy',
+				'post',
+				{
+					object : {'fb:app_id'	: 309471525924684, 'og:url' : 'http://donateadaisy.dev',
+					'og:title' : 'Dasiy Number Whatever',
+					'og:type'	: 'donateadaisy:daisy',
+					'og:image'	: 'https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png',
+					'og:description'	: 'my description'}
+					
+					
+				},
+				function(response) {
+					console.log(response);
+				} 
+			);*/
+		
+		} else {
+
+			//prompt login
+			FB.login(function(response){
+
+			  console.log(response);
+			  
+			});
+		}
+
+	}
+}).apply(app.fb);
 
 // --------  The main app controller --------- //
 (function(){
@@ -701,18 +931,21 @@ $(document).ready( function(){
 		{id: 4, content : 'Or in Memory of a Loved One'},
 		{id: 5, content : 'And connect to our Daisy Chain'}
 	];
+
 	//Prepare the modal object
 
 	//Start the intro & text Slides
-	//app.intro.init();
-	//app.textSlides.init();
+	app.intro.init();
+	app.textSlides.init();
 
-	 /*
-	 var test = setTimeout(function(){
+	 
+	 /* var test = setTimeout(function(){
 		app.textSlides.startSlideshow();
-	},1000);
-	*/
+	},1000); */
+
 
 	//Initialise the daisy chain
 	app.daisyChain.init();
+	app.fb.init();
 });
+

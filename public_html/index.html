@@ -9,13 +9,16 @@
 		<title>Donate a Daisy - For Cancer Connections</title>
 		<meta name="description" content="Add a Daisy to the Cancer Connections Daisy Chain. Make a donation and help friends, family and loved ones suffering from cancer.">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Facebook meta stuff -->
+		<meta property="og:type" content="donateadaisy:daisy" /> 
+		<meta property="og:title" content="I dont want to use this one" /> 
 
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 		<link rel="stylesheet" href="css/donateadaisy.css">
 		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+		<!-- <script type="text/javascript" async src="//platform.twitter.com/widgets.js"></script> -->
 	</head>
 	<body>
-
 		<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
@@ -33,6 +36,8 @@
 				<div class="blue pill">Total Donations</div>
 				<div id="raisedAmount">£0.00</div>
 			</div>
+
+			<a href="https://twitter.com/intent/tweet">Tweet</a>
 		</div>
 
 		<!-- Templates -->
@@ -47,6 +52,19 @@
 			</div>
 		</script>
 
+		<script type="text/x-handlebars-template" id="socialPopupTemplate">
+
+			<ul class="socialPopup">
+				<li class="fb"></li>
+				<li class="twitter">
+					<a id="twitterButton" href="https://twitter.com/intent/tweet?
+					text={{message}}&
+					url={{url}}&
+					hashtags=donateadaisy"></a>
+				</li>
+			</ul>
+		</script>
+
 		<script type="text/x-handlebars-template" id="daisyChainTemplate">
 
 			<div id="daisyChainMaster">
@@ -55,14 +73,14 @@
 					<ul id="daisyChain">
 						<li class="add"></li>
 						{{#each daisies}}
-						<li id='daisy-{{id}}'>
-							<img src="img/daisy-head.png" class="daisy">
+						<li id='daisy-{{id}}' class="daisyContainer">
+							<img src="img/daisy-head.png" class="daisy daisy-{{checkMessage message}}">
 							<div class="daisyInfo">
 								<div class="name">{{donorDisplayName}}</div>
 								<ul class="info clearfix">
 									<li class="{{checkMessage message}}" id="msg-{{id}}">&nbsp;</li>
 									<li class="pill cream number">{{id}}</li>
-									<li class="share">&nbsp;</li>
+									<li class="share" data-daisyindex={{id}}><button name='share' class='social' ></button></li>
 								</ul>
 							</div>
 						</li>
@@ -93,14 +111,14 @@
 				<ul class="messageButtons">
 					<li class="close">x</li>
 					<li class="add">+</li>
-					<li class="share"> </li>
+					<li class="social" data-daisyindex={{daisyIndex}}></li>
 				</ul>
 			</div>
 		</script>
 
 		<script type="text/x-handlebars-template" id="textSlidesTemplate">
 
-			<div id="introSlides" class="textSlides">
+			<div id="introSlides" class="textSlidesContainer">
 
 				<div class="timerContainer">
 					<div class="timer timer-left t1">
@@ -116,7 +134,7 @@
 
 				<div id="slideIndicator"></div>
 
-				<ul class="textSlideList">
+				<ul class="textSlides">
 				{{#each textSlides}}
 					<li id='slide-{{id}}'>{{content}}</li>
 				{{/each}}
@@ -142,7 +160,7 @@
 				</div>
 			</div>
 		</script>
-		
+
 		<!-- Includes -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
@@ -169,7 +187,18 @@
 		<!-- App -->
 		<script src="js/plugins.js"></script>
 		<script src="js/app.js"></script>
-		<script src="js/main.js"></script>
+
+		<!-- Twitter -->
+		<script>
+			window.twttr = (function (d, s, id) {
+				var t, js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src= "https://platform.twitter.com/widgets.js";
+				fjs.parentNode.insertBefore(js, fjs);
+				return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+			}(document, "script", "twitter-wjs"));
+		</script>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
 		<script>

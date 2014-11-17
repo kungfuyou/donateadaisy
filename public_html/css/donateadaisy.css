@@ -419,7 +419,6 @@ body strong em {
 }
 /* ----------- Intro -------------- */
 #introBG {
-  display: none;
   -webkit-transition: all 500ms cubic-bezier(0.45, 0, 0.75, 0.38);
   -moz-transition: all 500ms cubic-bezier(0.45, 0, 0.75, 0.38);
   -ms-transition: all 500ms cubic-bezier(0.45, 0, 0.75, 0.38);
@@ -558,8 +557,8 @@ body strong em {
   z-index: 99;
 }
 /* ---------- Intro Text Slides -------- */
-.textSlides {
-  background: rgba(255, 255, 255, 0.2);
+.textSlidesContainer {
+  background: #81ae67;
   display: block;
   height: 135px;
   margin: 0 auto;
@@ -569,12 +568,12 @@ body strong em {
   top: 40%;
   width: 520px;
 }
-.textSlides z ul {
+.textSlidesContainer ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.textSlides z ul li {
+.textSlidesContainer ul li {
   color: #fff;
   opacity: 0;
   display: none;
@@ -582,10 +581,10 @@ body strong em {
   letter-spacing: 1px;
   text-align: center;
 }
-.textSlides z ul li .blast {
+.textSlidesContainer ul li .blast {
   display: inline-block;
 }
-.textSlides .button {
+.textSlidesContainer .button {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -605,11 +604,11 @@ body strong em {
   width: 46px;
   left: 237px;
 }
-.textSlides .button:hover {
+.textSlidesContainer .button:hover {
   background: #ffc708;
   color: #fff;
 }
-.textSlides #slideIndicator {
+.textSlidesContainer #slideIndicator {
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   border-radius: 100%;
@@ -765,15 +764,16 @@ body strong em {
   -webkit-transform-origin: 50%, 50%;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo {
+  background: url('../img/daisy-shadow.png') no-repeat center center;
+  color: #fff;
+  font-family: 'robotolight', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 12px;
   left: -5px;
   position: absolute;
   text-align: center;
+  text-transform: uppercase;
   top: 160px;
   width: 188px;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #fff;
-  font-family: 'robotolight', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .name {
   width: 100%;
@@ -809,12 +809,97 @@ body strong em {
   background: url("../img/daisychain-icons.png") no-repeat scroll 0 -292px rgba(0, 0, 0, 0);
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share {
-  background: url('../img/daisychain-icons.png') no-repeat -9px -77px;
+  width: 20px;
+  position: relative;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share button {
+  background: url('../img/daisychain-icons.png') no-repeat -9px -78px;
+  border: medium none;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
   width: 20px;
 }
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share:hover {
-  background-position: -9px -113px;
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share button:hover {
+  background-position: -9px -114px;
   cursor: pointer;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share button.open {
+  background-position: -9px -330px;
+  cursor: pointer;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  -webkit-transform-origin: 50% 50% center;
+  -moz-transform-origin: 50% 50% center;
+  -ms-transform-origin: 50% 50% center;
+  -o-transform-origin: 50% 50% center;
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
+  height: 42px;
+  left: 50%;
+  margin: 0 0 0 -42px;
+  padding: 0;
+  position: absolute;
+  bottom: 32px;
+  width: 88px;
+  z-index: 999;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li {
+  background: url('../img/social-icons-32px.png') no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  height: 32px;
+  line-height: normal;
+  margin: 5px;
+  padding: 0;
+  width: 32px;
+  cursor: pointer;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.fb {
+  background-position: center 0;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.fb:hover {
+  background-position: center -34px;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.twitter {
+  background-position: center -68px;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.twitter a {
+  display: block;
+  height: 32px;
+  width: 32px;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.twitter:hover {
+  background-position: center -102px;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup:after {
+  border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+  border-image: none;
+  border-style: solid;
+  border-width: 8px;
+  bottom: -8px;
+  content: "";
+  display: block;
+  height: 0;
+  left: 50%;
+  margin-left: -8px;
+  position: absolute;
+  width: 0;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup.visible:after {
+  bottom: -16px;
 }
 #daisyChainMaster #rearChainContainer {
   height: 60px;
@@ -919,11 +1004,44 @@ body strong em {
 #messageContainer .messageButtons li.add:hover {
   background-position: -1px -253px;
 }
-#messageContainer .messageButtons li.share {
+#messageContainer .messageButtons li.social {
   background-position: -1px -73px;
 }
-#messageContainer .messageButtons li.share:hover {
+#messageContainer .messageButtons li.social:hover {
   background-position: -1px -109px;
+}
+#messageContainer .messageButtons li.social.open {
+  background-position: -1px -325px;
+}
+#messageContainer .messageButtons li.social .socialPopup {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: 34px;
+}
+#messageContainer .messageButtons li.social .socialPopup:first-child {
+  border-top: 1px solid #fff;
+}
+#messageContainer .messageButtons li.social .socialPopup li {
+  background: url('../img/social-icons-24px.png') no-repeat center 0 rgba(255, 255, 255, 0.6);
+  border-bottom: none;
+}
+#messageContainer .messageButtons li.social .socialPopup li.fb {
+  background-position: center 0;
+}
+#messageContainer .messageButtons li.social .socialPopup li.fb:hover {
+  background-position: center -34px;
+}
+#messageContainer .messageButtons li.social .socialPopup li.twitter {
+  background-position: center -67px;
+}
+#messageContainer .messageButtons li.social .socialPopup li.twitter a {
+  display: block;
+  width: 34px;
+  height: 34px;
+}
+#messageContainer .messageButtons li.social .socialPopup li.twitter:hover {
+  background-position: center -101px;
 }
 /* ---------- Pills -------------- */
 .pill {
@@ -994,6 +1112,7 @@ body strong em {
   width: 100px;
   text-align: center;
 }
+/* ---------- Social Popup ----------- */
 @-webkit-keyframes loading {
   0% {
     width: 10px;
