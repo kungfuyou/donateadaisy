@@ -25,6 +25,8 @@
 
 		<div id="content">
 
+			<div id="centerpoint"></div>
+
 		   <div id="introBG">
 		   </div>
 
@@ -69,7 +71,14 @@
 
 				<div id="daisyChainContainer">
 					<ul id="daisyChain">
-						<li class="add"></li>
+						<li class="add">
+							<img src="img/daisy-head-add-icon.png" class="daisy-add-icon">
+							<img src="img/daisy-head-add.png" class="daisy-add daisy">
+							<a href="http://v3-sandbox.justgiving.com/donateadaisy/4w350m3/donate/
+?amount=20
+&currency=GBP
+&exitUrl=http%3a%2f%2fwww.donateadaisy.dev%2fpath?donationId=JUSTGIVING-DONATION-ID" class="pill yellow">add your daisy</a>
+						</li>
 						{{#each daisies}}
 						<li id='daisy-{{id}}' class="daisyContainer">
 							<img src="img/daisy-head.png" class="daisy daisy-{{checkMessage message}}">
@@ -89,7 +98,6 @@
 				<div id="rearChainContainer" class="iScrollLoneScrollbar">
 					<div id="rearChain"></div>
 				</div>
-
 			</div>
 		</script>
 

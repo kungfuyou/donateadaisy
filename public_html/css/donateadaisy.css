@@ -418,7 +418,17 @@ body strong em {
   font-family: 'robotobold_italic', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 /* ----------- Intro -------------- */
+#centerpoint {
+  background: none repeat scroll 0 0 #000;
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  width: 1px;
+  z-index: 999;
+}
 #introBG {
+  display: none;
   -webkit-transition: all 500ms cubic-bezier(0.45, 0, 0.75, 0.38);
   -moz-transition: all 500ms cubic-bezier(0.45, 0, 0.75, 0.38);
   -ms-transition: all 500ms cubic-bezier(0.45, 0, 0.75, 0.38);
@@ -727,8 +737,8 @@ body strong em {
   /* Custom Cursor Base 64 Encoded */
 }
 #daisyChainMaster #daisyChainContainer #daisyChain {
-  padding: 0 60px 0 190px;
-  margin: 10px 0 0;
+  padding: 0 0 0px 387px;
+  margin: 10px 0 0 65px ;
   opacity: 0;
   left: 100%;
   list-style-type: none;
@@ -747,7 +757,7 @@ body strong em {
   background: url('../img/daisy-stem.png') no-repeat center right;
   display: inline-block;
   height: 150px;
-  margin: 0 0 0 -130px;
+  margin: 0 -4px 0 -130px;
   padding: 0;
   width: 320px;
   position: relative;
@@ -773,7 +783,7 @@ body strong em {
   text-align: center;
   text-transform: uppercase;
   top: 160px;
-  width: 188px;
+  width: 177px;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .name {
   width: 100%;
@@ -900,6 +910,28 @@ body strong em {
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup.visible:after {
   bottom: -16px;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain li.add {
+  background-image: url('../img/daisy-stem-add-r.png');
+}
+#daisyChainMaster #daisyChainContainer #daisyChain li.add .daisy-add-icon {
+  left: 69px;
+  padding: 10px;
+  position: absolute;
+  top: 55px;
+  z-index: 1;
+}
+#daisyChainMaster #daisyChainContainer #daisyChain li.add .pill {
+  background-image: url('../img/daisy-head-add-icon.png');
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  font-size: 12px;
+  color: #68934f;
+  left: 23px;
+  position: absolute;
+  text-decoration: none;
+  top: 160px;
 }
 #daisyChainMaster #rearChainContainer {
   height: 60px;
@@ -1060,6 +1092,9 @@ body strong em {
 }
 .pill.cream {
   background-color: #ece196;
+}
+.pill.yellow {
+  background-color: #ffde00;
 }
 /* --------- Loading ------------- */
 #loading {

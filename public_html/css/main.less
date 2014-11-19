@@ -84,9 +84,19 @@ body {
 
  /* ----------- Intro -------------- */
 
+#centerpoint {
+    background: none repeat scroll 0 0 #000;
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    z-index: 999;
+}
+
 #introBG {
 
-	//display: none;
+	display: none;
 
  	.transition(all 500ms cubic-bezier(0.45, 0, 0.75, 0.38));
 
@@ -447,11 +457,10 @@ body {
 
 		/* Custom Cursor Base 64 Encoded */
 		
-
 	    #daisyChain{
 
-	    	padding: 0 60px 0 190px;
-	    	margin: 10px 0 0;
+	    	padding: 0 0 0px 387px; // (130 + 322) 452px to centre   - 65px
+	    	margin: 10px 0 0 65px ; //push last daisy off the screen by half its width
 	    	opacity : 0;
 	    	left: 100%;
 	    	
@@ -474,7 +483,7 @@ body {
 	    		background: url('@{img-path}daisy-stem.png') no-repeat center right;
 	    		display: inline-block;
 	    		height: 150px;
-	    		margin: 0 0 0 -130px;
+	    		margin: 0 -4px 0 -130px; //-130px; // -4px for the whitespace from inline-block
 	    		padding: 0;
 	    		width: 320px;
 	    		position: relative;
@@ -504,7 +513,7 @@ body {
 					text-align: center;
 					text-transform: uppercase;
 					top: 160px;
-					width: 188px;
+					width: 177px;
 
 					.name{
 						width: 100%;
@@ -667,6 +676,34 @@ body {
 					}
 				}
 	    	}
+
+	    	li.add {
+
+	    		background-image: url('@{img-path}daisy-stem-add-r.png');
+
+    			.daisy-add-icon {
+
+				    left: 69px;
+				    padding: 10px;
+				    position: absolute;
+				    top: 55px;
+				    z-index: 1;
+				}
+
+				.pill {
+
+					background-image: url('@{img-path}daisy-head-add-icon.png');
+					background-position: 6px center;
+				    background-repeat: no-repeat;
+				    background-size: 10px 10px;
+					font-size: 12px;
+				    color: @green-grass;
+				    left: 23px;
+				    position: absolute;
+				    text-decoration: none;
+				    top: 160px;
+				}
+    		}
 	    }
 	}
 
@@ -888,6 +925,11 @@ body {
 	&.cream {
 
 		background-color: @cream;
+	}
+
+	&.yellow {
+
+		background-color: @yellow;
 	}
 }
 

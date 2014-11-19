@@ -7,6 +7,7 @@ app.helpers = {};
 app.pieTimer = {};
 app.daisyChain = {};
 app.loading = {};
+app.donate = {};
 app.fb = {};
 
 // -------- Helpers ---------  //
@@ -551,7 +552,7 @@ app.fb = {};
 
 		var scrollWidth = -obj.daisyScroll.x;
 		var viewCentre = scrollWidth + (windowWidth/2);
-		var currentCentre = (viewCentre + (daisyWidth/2) - 70) / daisyWidth; // subtract the offset in padd/margin
+		var currentCentre = (viewCentre + (daisyWidth/2) - 322) / daisyWidth; // subtract the offset in padd 452 less the 130px width
 		var currentIndex = Math.round(currentCentre);
 		var currentZeroIndex = currentIndex - 1;
 		var leftRange = currentIndex - 0.5;
@@ -635,6 +636,11 @@ app.fb = {};
 				obj.daisyChainShareBubbleAnim(clicked);
 			}
 		});
+
+		$(".daisy-add-icon , .add .pill").on('click' , function(e){
+			e.preventDefault();
+			app.donate.goToDonateUrl();
+		})
 	}
 
 	obj.addMessageDependencies = function(){
@@ -666,8 +672,6 @@ app.fb = {};
 
 	obj.addShareDependencies = function(){
 		
-		
-
 		$('.fb').on("click" , function(e){
 			console.log('facecook');
 			//var fbLoginStatus = app.fb.shareDaisy();
@@ -782,7 +786,6 @@ app.fb = {};
 
 		return daisyData[index].donorDisplayName;
 	}
-
 }).apply(app.daisyChain);
 
 // -------- FaceBook API --------//
@@ -882,6 +885,31 @@ app.fb = {};
 	}
 }).apply(app.fb);
 
+// -------- Simple Donations Integration --------//
+(function(){
+
+	var obj = this;
+	var appUrl = 'http://donateadaisy.dev';
+	var jgUrl = 'http://v3-sandbox.justgiving.com/';
+	var shortUrl = 'donateadaisy/';
+	var suggestedAmount = 20;
+	var currency = 'GBP';
+	var exitUrl = encodeURI(appUrl + '?donationId=JUSTGIVING-DONATION-ID');
+
+	obj.goToDonateUrl = function(){
+
+		window.location.href = jgUrl + shortUrl + "4w350m3/donate/?amount=" + suggestedAmount + "&currency=" + currency + "&exitUrl=" + exitUrl;
+
+	}
+
+	//http://v3-sandbox.justgiving.com/donateadaisy/4w350m3/donate/
+			//?amount=20
+			//&currency=GBP
+			//&exitUrl=http%3a%2f%2fwww.donateadaisy.dev%2fpath?donationId=JUSTGIVING-DONATION-ID
+
+
+}).apply(app.donate);
+
 // --------  The main app controller --------- //
 (function(){
 
@@ -926,13 +954,9 @@ $(document).ready( function(){
 	//Prepare the modal object
 
 	//Start the intro & text Slides
-	app.intro.init();
-	app.textSlides.init();
+	//app.intro.init();
+	//app.textSlides.init();
 
-	 
-	 /* var test = setTimeout(function(){
-		app.textSlides.startSlideshow();
-	},1000); */
 
 
 	//Initialise the daisy chain
