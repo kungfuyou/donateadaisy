@@ -12,7 +12,34 @@ app.fb = {};
 
 // -------- Helpers ---------  //
 (function(){
+
 	var obj = this;
+
+	//Get value of a url parameter
+	obj.getURLParameter = function(sParam){
+
+		var sPageURL = window.location.search.substring(1);
+		var sURLVariables = sPageURL.split('&');
+
+		for (var i = 0; i < sURLVariables.length; i++)
+		{
+			var sParameterName = sURLVariables[i].split('=');
+			if (sParameterName[0] == sParam)
+			{
+				return sParameterName[1];
+			}
+		}
+	};
+
+	//A console ticker to help with timing
+	obj.consoleTicker = function(){
+		var i = 0;
+		var ticker = setInterval(function(){
+			i = i + 0.5;
+			console.log (i);
+		}, 500); 
+	};
+
 }).apply(app.helpers);
 
 // ------- Intro Screen --------//
@@ -59,7 +86,7 @@ app.fb = {};
 
 		var templateSource = obj.templateId.html();
 		var template = Handlebars.compile(templateSource);
-		obj.templateContainer.append(template);
+		obj.templateContainer.append(template).css({ 'display' : 'block'});
 	},
 
 	app.intro.startAnimation = function(){
@@ -552,7 +579,7 @@ app.fb = {};
 
 		var scrollWidth = -obj.daisyScroll.x;
 		var viewCentre = scrollWidth + (windowWidth/2);
-		var currentCentre = (viewCentre + (daisyWidth/2) - 322) / daisyWidth; // subtract the offset in padd 452 less the 130px width
+		var currentCentre = (viewCentre + (daisyWidth/2) - 130) / daisyWidth; // subtract the offset in padd 452 less the 130px width
 		var currentIndex = Math.round(currentCentre);
 		var currentZeroIndex = currentIndex - 1;
 		var leftRange = currentIndex - 0.5;
@@ -639,7 +666,10 @@ app.fb = {};
 
 		$(".daisy-add-icon , .add .pill").on('click' , function(e){
 			e.preventDefault();
-			app.donate.goToDonateUrl();
+			//app.donate.goToDonateUrl();
+			if(!app.donate.redirecting){
+				app.donate.setRedirectMessage();
+			}
 		})
 	}
 
@@ -895,19 +925,75 @@ app.fb = {};
 	var suggestedAmount = 20;
 	var currency = 'GBP';
 	var exitUrl = encodeURI(appUrl + '?donationId=JUSTGIVING-DONATION-ID');
+	var redirectMessage = 'You will now be taken to JustGiving to make your donation';
+	var redirecting;
+	var timerVal = 5;
+
+	obj.setRedirectMessage = function(){
+
+		$('li.add .pill').attr('data-content' , timerVal).addClass('redirect').text('redirect in');
+		$('li.add').append("<div id='redirectMessage'>" + redirectMessage + "</div>");
+		$('#redirectMessage').velocity('fadeIn' , { duration : 500});
+		obj.redirecting = true;
+		//Set timeout here
+		obj.startCountdown();
+	}
+
+	obj.startCountdown = function(){
+
+		var timerVal = $('.redirect').attr('data-content');
+
+		var redirectInterval = setInterval( function(){
+			timerVal = timerVal - 1;
+			$('.redirect').attr('data-content' , timerVal);
+			if (timerVal == 0){
+				clearInterval(redirectInterval);
+				obj.goToDonateUrl();
+			}
+		}, 1000);
+	}
 
 	obj.goToDonateUrl = function(){
 
 		window.location.href = jgUrl + shortUrl + "4w350m3/donate/?amount=" + suggestedAmount + "&currency=" + currency + "&exitUrl=" + exitUrl;
-
 	}
 
-	//http://v3-sandbox.justgiving.com/donateadaisy/4w350m3/donate/
-			//?amount=20
-			//&currency=GBP
-			//&exitUrl=http%3a%2f%2fwww.donateadaisy.dev%2fpath?donationId=JUSTGIVING-DONATION-ID
+	obj.getDonationStatus = function(donationId){
 
+		var donationStatus = $.ajax({
 
+			url : 'php/getDonationStatus.php',
+			contentType : 'application/json',
+			data : {donationId : donationId},
+
+			error : function(result){
+
+				console.log(result.status + " : " + result.data);
+				//need some error handling here
+			},
+
+			success : function(result){
+
+				result = jQuery.parseJSON(result);
+
+				if(result.status = "success") {
+
+					console.log(result);
+
+					//daisyData = result.data
+					// Add the Daisy Chain Container to the DOM
+					//var templateSource = $(daisyContainerTemplate).html();
+					//var template = Handlebars.compile(templateSource);
+					//var templateContent = template({daisies : daisyData});
+					//$(app.contentId).append(templateContent);
+
+				} else {
+
+					console.log('the data did not return in the correct format');
+				}	
+			}
+		});
+	}
 }).apply(app.donate);
 
 // --------  The main app controller --------- //
@@ -918,49 +1004,45 @@ app.fb = {};
 
 	obj.init = function(){
 
+		var donationId = app.helpers.getURLParameter('donationId');
+
+		app.textSlides.slides = [
+			{id: 1, content : 'Donate a Daisy to Cancer Connections'},
+			{id: 2, content : 'Add a Daisy to Our Daisy Chain'},
+			{id: 3, content : 'To Support Family of Friends Affected by Cancer'},
+			{id: 4, content : 'Or in Memory of a Loved One'},
+			{id: 5, content : 'And connect to our Daisy Chain'}
+		];
+
 		obj.cacheSelectors();
+		app.modal.init();
+
+		if(donationId && donationId != ''){
+			//check the status of the donation
+			console.log(donationId);
+			app.donate.getDonationStatus(donationId);
+			//start the thank you animation
+		} else {
+			//Start the intro & text Slides
+			app.intro.init();
+			app.textSlides.init();
+		}
+
+		app.daisyChain.init();
+		app.fb.init();
 	},
 
 	obj.cacheSelectors = function(){
 
 		obj.contentId = $('#content');
-	},
-
-	//A console ticker to help with timing
-	obj.consoleTicker = function(){
-		var i = 0;
-		var ticker = setInterval(function(){
-			i = i + 0.5;
-			console.log (i);
-		}, 500); 
 	}
+
 }).apply(app);
 
 // --------  The main app controller Stuff to sort --------- //
+
 $(document).ready( function(){
-	//Start the app
+
 	app.init();
-	app.modal.init();
-	//Set up the intro text slides
-
-	app.textSlides.slides = [
-		{id: 1, content : 'Donate a Daisy to Cancer Connections'},
-		{id: 2, content : 'Add a Daisy to Our Daisy Chain'},
-		{id: 3, content : 'To Support Family of Friends Affected by Cancer'},
-		{id: 4, content : 'Or in Memory of a Loved One'},
-		{id: 5, content : 'And connect to our Daisy Chain'}
-	];
-
-	//Prepare the modal object
-
-	//Start the intro & text Slides
-	//app.intro.init();
-	//app.textSlides.init();
-
-
-
-	//Initialise the daisy chain
-	app.daisyChain.init();
-	app.fb.init();
 });
 
