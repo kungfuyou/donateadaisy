@@ -354,6 +354,12 @@ html {
   background: #b3d4fc;
   text-shadow: none;
 }
+a,
+a:hover,
+a:active,
+a:focus {
+  outline: none;
+}
 hr {
   display: block;
   height: 1px;
@@ -388,12 +394,16 @@ textarea {
 /* ==========================================================================
 	 Donate-a-daisy Styles
 	 ========================================================================== */
+html {
+  height: 100%;
+}
 body {
   font-family: 'robotoregular', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   background: url('../img/sky.png') repeat-x center 0 #68934f;
   background-attachment: fixed;
   font-size: 16px;
   overflow: hidden;
+  height: 100%;
 }
 body em,
 body i {
@@ -416,6 +426,11 @@ body strong i,
 body b em,
 body strong em {
   font-family: 'robotobold_italic', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+#content {
+  height: 100%;
+  min-height: 660px;
+  position: relative;
 }
 /* ----------- Intro -------------- */
 #centerpoint {
@@ -594,29 +609,12 @@ body strong em {
 .textSlidesContainer ul li .blast {
   display: inline-block;
 }
-.textSlidesContainer .button {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-transition: 0.6s ease-out;
-  -moz-transition: 0.6s ease-out;
-  -ms-transition: 0.6s ease-out;
-  -o-transition: 0.6s ease-out;
+.textSlidesContainer .button-close {
   bottom: 10px;
-  color: #ffc708;
-  font-family: 'norwester', Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', sans serif;
-  font-size: 20px;
-  line-height: normal;
-  padding: 5px;
   position: absolute;
-  text-align: center;
-  text-decoration: none;
   width: 46px;
-  left: 237px;
-}
-.textSlidesContainer .button:hover {
-  background: #ffc708;
-  color: #fff;
+  left: 50%;
+  margin-left: -28px;
 }
 .textSlidesContainer #slideIndicator {
   -webkit-border-radius: 100%;
@@ -628,7 +626,7 @@ body strong em {
   height: 16px;
   left: 50%;
   line-height: 16px;
-  margin-left: -23px;
+  margin-left: -8px;
   position: absolute;
   text-align: center;
   top: -8px;
@@ -638,7 +636,7 @@ body strong em {
 .timerContainer {
   height: 30px;
   left: 50%;
-  margin-left: -30px;
+  margin-left: -15px;
   position: absolute;
   top: -15px;
   width: 30px;
@@ -839,77 +837,12 @@ body strong em {
   background-position: -9px -330px;
   cursor: pointer;
 }
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
-  -webkit-transform-origin: 50% 50% center;
-  -moz-transform-origin: 50% 50% center;
-  -ms-transform-origin: 50% 50% center;
-  -o-transform-origin: 50% 50% center;
-  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
-  height: 42px;
-  left: 50%;
-  margin: 0 0 0 -42px;
-  padding: 0;
-  position: absolute;
-  bottom: 32px;
-  width: 88px;
-  z-index: 999;
-  overflow: hidden;
-  white-space: nowrap;
-  opacity: 0;
-}
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li {
-  background: url('../img/social-icons-32px.png') no-repeat scroll 0 0 transparent;
-  display: inline-block;
   height: 32px;
   line-height: normal;
   margin: 5px;
   padding: 0;
   width: 32px;
-  cursor: pointer;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.fb {
-  background-position: center 0;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.fb:hover {
-  background-position: center -34px;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.twitter {
-  background-position: center -68px;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.twitter a {
-  display: block;
-  height: 32px;
-  width: 32px;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li.twitter:hover {
-  background-position: center -102px;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup:after {
-  border-color: rgba(255, 255, 255, 0.9) transparent transparent;
-  border-image: none;
-  border-style: solid;
-  border-width: 8px;
-  bottom: -8px;
-  content: "";
-  display: block;
-  height: 0;
-  left: 50%;
-  margin-left: -8px;
-  position: absolute;
-  width: 0;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
-}
-#daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup.visible:after {
-  bottom: -16px;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain li.add {
   background-image: url('../img/daisy-stem-add-r.png');
@@ -952,14 +885,14 @@ body strong em {
   width: 19px;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain li.add #redirectMessage {
-  bottom: -27px;
+  bottom: -17px;
   display: block;
-  left: -20px;
+  left: 20px;
   position: absolute;
   text-align: center;
   text-transform: uppercase;
   white-space: normal;
-  width: 235px;
+  width: 150px;
 }
 #daisyChainMaster #rearChainContainer {
   height: 60px;
@@ -1124,6 +1057,28 @@ body strong em {
 .pill.yellow {
   background-color: #ffde00;
 }
+/* ----------- Buttons ------------ */
+.button {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: 0.6s ease-out;
+  -moz-transition: 0.6s ease-out;
+  -ms-transition: 0.6s ease-out;
+  -o-transition: 0.6s ease-out;
+  color: #ffc708;
+  font-family: 'norwester', Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', sans serif;
+  font-size: 20px;
+  line-height: normal;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+.button:hover,
+.button.open {
+  background: #ffc708;
+  color: #fff;
+}
 /* --------- Loading ------------- */
 #loading {
   left: 50%;
@@ -1175,7 +1130,267 @@ body strong em {
   width: 100px;
   text-align: center;
 }
+/* ---------- Donation Intro ----------- */
+#donateAnimation {
+  height: 300px;
+  margin: -150px auto 0;
+  position: relative;
+  top: 50%;
+  width: 300px;
+  display: none;
+}
+#donateAnimation #donateStem {
+  left: 63px;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+#donateAnimation #donateFlower {
+  background: url('../img/daisy-open-anim.png') no-repeat center 0px;
+  display: block;
+  height: 120px;
+  left: 7px;
+  position: absolute;
+  top: 12px;
+  width: 139px;
+  z-index: 2;
+}
+#donateAnimation #butterfly {
+  background: url('../img/butterfly-anim.png') center -300px repeat-y;
+  display: block;
+  height: 100px;
+  opacity: 0;
+  position: absolute;
+  width: 125px;
+  left: 12px;
+  top: 16px;
+  transform: rotate(30deg);
+  z-index: 3;
+}
+#donateAnimation #donationMessage {
+  color: white;
+  font-family: 'robotolight', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 14px;
+  position: absolute;
+  text-align: center;
+  top: 160px;
+}
+#donateAnimation #donationMessage #donorThanks {
+  opacity: 0;
+}
+#donateAnimation #donationMessage #donorMessage {
+  opacity: 0;
+  font-family: 'robotolight_italic', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+#donateAnimation #donationActions {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+#donateAnimation #donationActions #donate-share-wrapper {
+  position: relative;
+  float: left;
+}
+#donateAnimation #donationActions #donate-share {
+  float: left;
+}
+#donateAnimation #donationActions #donate-continue {
+  float: right;
+}
 /* ---------- Social Popup ----------- */
+#daisyChain .socialPopup,
+#donate-share-wrapper .socialPopup {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  -webkit-transform-origin: 50% 50% center;
+  -moz-transform-origin: 50% 50% center;
+  -ms-transform-origin: 50% 50% center;
+  -o-transform-origin: 50% 50% center;
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
+  height: 42px;
+  left: 50%;
+  margin: 0 0 0 -42px;
+  padding: 0;
+  position: absolute;
+  bottom: 32px;
+  width: 88px;
+  z-index: 999;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+}
+#daisyChain .socialPopup li,
+#donate-share-wrapper .socialPopup li {
+  background: url('../img/social-icons-32px.png') no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  height: 32px;
+  line-height: normal;
+  margin: 5px;
+  padding: 0;
+  width: 32px;
+  cursor: pointer;
+}
+#daisyChain .socialPopup li.fb,
+#donate-share-wrapper .socialPopup li.fb {
+  background-position: center 0;
+}
+#daisyChain .socialPopup li.fb:hover,
+#donate-share-wrapper .socialPopup li.fb:hover {
+  background-position: center -34px;
+}
+#daisyChain .socialPopup li.twitter,
+#donate-share-wrapper .socialPopup li.twitter {
+  background-position: center -68px;
+}
+#daisyChain .socialPopup li.twitter a,
+#donate-share-wrapper .socialPopup li.twitter a {
+  display: block;
+  height: 32px;
+  width: 32px;
+}
+#daisyChain .socialPopup li.twitter:hover,
+#donate-share-wrapper .socialPopup li.twitter:hover {
+  background-position: center -102px;
+}
+#daisyChain .socialPopup:after,
+#donate-share-wrapper .socialPopup:after {
+  border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+  border-image: none;
+  border-style: solid;
+  border-width: 8px;
+  bottom: -8px;
+  content: "";
+  display: block;
+  height: 0;
+  left: 50%;
+  margin-left: -8px;
+  position: absolute;
+  width: 0;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
+}
+#daisyChain .socialPopup.visible:after,
+#donate-share-wrapper .socialPopup.visible:after {
+  bottom: -16px;
+}
+/* --------- Footer ---------------- */
+#footerBar {
+  background: #c3d4b9;
+  bottom: 0;
+  height: 80px;
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  line-height: 12px;
+  opacity: 0;
+}
+#footerBar #footerLogo {
+  position: absolute;
+  padding: 10px;
+  left: 0;
+  top: 0;
+  width: 138px;
+}
+#footerBar #blurb {
+  font-size: 11px;
+  height: 60px;
+  list-style: outside none none;
+  margin: 0;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+  text-align: right;
+}
+#footerBar #blurb li {
+  display: block;
+  margin: 0 0 5px;
+}
+#footerBar #blurb li#hashtag {
+  font-weight: bold;
+}
+#footerBar #blurb li#contact a {
+  display: inline-block;
+}
+#footerBar #blurb li#contact a:first-child {
+  margin-right: 2px;
+  padding-right: 4px;
+  border-right: 1px solid #929f8b;
+}
+#footerBar #blurb li#design {
+  height: 26px;
+  margin: 0;
+}
+#footerBar #blurb li#design a {
+  background: url('../img/kfy-logo.png') no-repeat right 0;
+  display: block;
+  height: 26px;
+}
+#footerBar #blurb li#design a:hover {
+  background-position: right -26px;
+}
+#footerBar #footerNav {
+  height: 80px;
+  margin: 0 auto;
+  width: 248px;
+  padding: 0;
+  list-style: none;
+}
+#footerBar #footerNav li:first-child {
+  border-left: 2px solid #929f8b;
+}
+#footerBar #footerNav li {
+  float: left;
+  height: 80px;
+  width: 80px;
+  border-right: 2px solid #929f8b;
+  background: url('../img/footer-icons.png') no-repeat center 0;
+  cursor: pointer;
+}
+#footerBar #footerNav li.add:hover {
+  background-position: center -80px;
+}
+#footerBar #footerNav li.share {
+  background-position: center -160px;
+}
+#footerBar #footerNav li.share:hover {
+  background-position: center -240px;
+}
+#footerBar #footerNav li.about {
+  background-position: center -320px;
+}
+#footerBar #footerNav li.about:hover {
+  background-position: center -400px;
+}
+#footerBar a {
+  text-decoration: none;
+  color: #929f8b;
+}
+#footerBar a:hover {
+  color: #565c53;
+}
+/* ----------- Tooltips ------------ */
+.tooltip {
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 11px;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  top: -41px;
+  width: 60px;
+  transform-origin: 50% 100%;
+  opacity: 0;
+}
 @-webkit-keyframes loading {
   0% {
     width: 10px;

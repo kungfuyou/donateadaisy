@@ -27,6 +27,10 @@ html {
 	text-shadow: none;
 }
 
+a, a:hover, a:active, a:focus {
+ outline: none;
+}
+
 hr {
 	display: block;
 	height: 1px;
@@ -72,70 +76,83 @@ textarea {
 
 @img-path: '../img/';
 
+html {
+
+	height: 100%;
+}
+
 body {
+	
 	.fontface-roboto();
 	background: url('@{img-path}sky.png') repeat-x center 0 @green-grass;
 	background-attachment: fixed; 
 	font-size: 16px;
 	overflow: hidden;
-	
+	height: 100%;
 	//font-family: @fontface-roboto-lightitalic;
+ }
+
+ #content {
+
+ 	height: 100%;
+ 	min-height: 660px;
+ 	position: relative;
  }
 
  /* ----------- Intro -------------- */
 
 #centerpoint {
-    background: none repeat scroll 0 0 #000;
-    height: 100%;
-    left: 50%;
-    position: absolute;
-    top: 0;
-    width: 1px;
-    z-index: 999;
+	background: none repeat scroll 0 0 #000;
+	height: 100%;
+	left: 50%;
+	position: absolute;
+	top: 0;
+	width: 1px;
+	z-index: 999;
 }
 
 #introBG {
 
 	display: none;
 
- 	.transition(all 500ms cubic-bezier(0.45, 0, 0.75, 0.38));
+	.transition(all 500ms cubic-bezier(0.45, 0, 0.75, 0.38));
 
- 	background: @intro-blue;
- 	height: 100%;
- 	position: absolute;
- 	position: fixed;
- 	width: 100%;
- 	z-index: 999;
+	background: @intro-blue;
+	height: 100%;
+	position: absolute;
+	position: fixed;
+	width: 100%;
+	z-index: 999;
 
- 	&.clean-up {
+	&.clean-up {
 
- 		.transform(translateY(-100%));
- 	}
+		.transform(translateY(-100%));
+	}
 
- 	#intro {
+	#intro {
 
 		height: 180px;
 		margin: -90px auto 0;
 		position: relative;
 		top: 50%;
- 		width: 410px;
+		width: 410px;
 
- 		#introFlower {
+		#introFlower {
 
- 			.transition(all 600ms cubic-bezier(0.8, 0,0.6, 1) 0s);
- 			.transform-origin(50% , 100%);
+			.transition(all 600ms cubic-bezier(0.8, 0,0.6, 1) 0s);
+			.transform-origin(50% , 100%);
 
- 			position: absolute;
+			position: absolute;
 			top: 10px;
 			left: 10px;
 			z-index: 4;
 			visibility: visible;
 			
- 		}
+		}
 
- 		#introShadow {
+		#introShadow {
 
- 			.transition(all 1000ms cubic-bezier(0.7, 0, 0.85, 0.5) 600ms);
+			.transition(all 1000ms cubic-bezier(0.7, 0, 0.85, 0.5) 600ms);
 			.transform-origin(0%, 50%);
 
 			left: 41px;
@@ -144,105 +161,105 @@ body {
 			visibility: visible;
 			width:165px;
 			z-index: 3;
- 			position: absolute;
+			position: absolute;
 
 			img{
 				height: 48px;
 				width: 100%;
 			}
- 		}
+		}
 
- 		#introDonate {
+		#introDonate {
 
- 			.transition(all 500ms ease-out 1000ms);
+			.transition(all 500ms ease-out 1000ms);
 
 			left: 135px;
 			top: 30px;
 			z-index: 2;
- 			height: 37px;
- 			overflow: hidden;
- 			position: absolute;
- 			visibility: visible;
- 			width:257px;
- 		}
+			height: 37px;
+			overflow: hidden;
+			position: absolute;
+			visibility: visible;
+			width:257px;
+		}
 
- 		#introCC {
+		#introCC {
 
- 			.transition(all 1000ms ease-out 2000ms);
- 			
- 			left: 135px;
- 			opacity: 1;
- 			position: absolute;
- 			top: 72px;
- 			z-index: 1;
- 		}
+			.transition(all 1000ms ease-out 2000ms);
+			
+			left: 135px;
+			opacity: 1;
+			position: absolute;
+			top: 72px;
+			z-index: 1;
+		}
 
- 		&.is-hidden {
+		&.is-hidden {
 
- 			#introFlower {
+			#introFlower {
 
 				.transform(scale(0,0));
 
 				left: 154px;
 				visibility: hidden;
-	 		}
+			}
 
-	 		#introShadow {
-	 			display: none;
-	 		}
+			#introShadow {
+				display: none;
+			}
 
-	 		#introDonate {
-	 			display: none;
-	 		}
+			#introDonate {
+				display: none;
+			}
 
-	 		#introCC {
-	 			display: none;
-	 		}
- 		}
+			#introCC {
+				display: none;
+			}
+		}
 
- 		&.is-visible{
+		&.is-visible{
 
- 			#introFlower {
+			#introFlower {
 				left: 154px;
-	 		}
+			}
 
-	 		#introShadow {
+			#introShadow {
 
 				.transform(rotate(20deg));
 
 				width: 0;
-	 			display: block;
-	 			opacity:0;
-	 			visibility: hidden;
-	 		}
+				display: block;
+				opacity:0;
+				visibility: hidden;
+			}
 
-	 		#introDonate {
-	 			visibility: hidden;
-	 			display: block;
+			#introDonate {
+				visibility: hidden;
+				display: block;
 				width: 0px;
-	 		}
+			}
 
-	 		#introCC {
-	 			display: block;
-	 			visibility: hidden;
-	 			opacity: 0;
-	 		}
-	 	}
- 	}
+			#introCC {
+				display: block;
+				visibility: hidden;
+				opacity: 0;
+			}
+		}
+	}
 }
 
 /* ---------- Modal Popups -------- */
 #modalBG {
 
 	background: rgba(255,255,255,0.5);
- 	display:none;
- 	height: 100%;
- 	opacity: 0;	
- 	position: absolute;
- 	width: 100%;
- 	top: 0;
- 	left: 0;
- 	z-index:99;
+	display:none;
+	height: 100%;
+	opacity: 0;	
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index:99;
 }
 
 /* ---------- Intro Text Slides -------- */
@@ -284,44 +301,30 @@ body {
 		}
 	}	
 
-	.button {
-
-		.rounded(5px);
-		.transition(0.6s ease-out);
+	.button-close {
 
 		bottom: 10px;
-		color: @yellow-daisy ;
-		font-family: @fontface-norwester;
-		font-size: 20px;
-		line-height: normal;
-		padding: 5px;
 		position: absolute;
-		text-align: center;
-		text-decoration: none;
 		width: 46px;
-		left: 237px;
-
-		&:hover {
-			background: @yellow-daisy;
-			color: #fff;
-		}
+		left: 50%;
+		margin-left: -28px;
 	}
 
 	#slideIndicator{
 
 		.rounded(100%);
 
-	    color: #fff;
-	    font-size: 9px;
-	    font-family: @fontface-roboto-light;
-	    height: 16px;
-	    left: 50%;
-	    line-height: 16px;
-	    margin-left: -23px;
-	    position: absolute;
-	    text-align: center;
-	    top: -8px;
-	    width: 16px;
+		color: #fff;
+		font-size: 9px;
+		font-family: @fontface-roboto-light;
+		height: 16px;
+		left: 50%;
+		line-height: 16px;
+		margin-left: -8px;
+		position: absolute;
+		text-align: center;
+		top: -8px;
+		width: 16px;
 	}
 }
 
@@ -329,11 +332,11 @@ body {
 .timerContainer {
 
 	height: 30px;
-    left: 50%;
-    margin-left: -30px;
-    position: absolute;
-    top: -15px;
-    width: 30px;
+	left: 50%;
+	margin-left: -15px;
+	position: absolute;
+	top: -15px;
+	width: 30px;
 
 	.timer {
 
@@ -397,11 +400,11 @@ body {
 #logo {
 
 	height: 155px;
-    left: 50%;
-    margin-left: -185px;
-    position: fixed;
-    top: 65px;
-    width: 370px;
+	left: 50%;
+	margin-left: -185px;
+	position: fixed;
+	top: 65px;
+	width: 370px;
 }
 
 #raisedAmountMessage {
@@ -413,11 +416,11 @@ body {
 	text-align: center;
 
 	#raisedAmount {
-	    font-family: @fontface-mathlete;
-	    font-size: 30px;
-	    letter-spacing: 1px;
-	    line-height: 32px;
-	    color: @blue;
+		font-family: @fontface-mathlete;
+		font-size: 30px;
+		letter-spacing: 1px;
+		line-height: 32px;
+		color: @blue;
 	}
 }
 
@@ -430,17 +433,17 @@ body {
 	height: 290px;
 
 	#daisyChainContainer {
-	    
-	    display: block;
-	    position: absolute;
-	    top: 0px;
-	    width: 100%;
-	    height: 165px;
+		
+		display: block;
+		position: absolute;
+		top: 0px;
+		width: 100%;
+		height: 165px;
 	   // overflow: hidden;
-	    padding: 60px 0 0 ;
-	    z-index: 2;
+		padding: 60px 0 0 ;
+		z-index: 2;
 
-	    /* Prevent native touch events on Windows */
+		/* Prevent native touch events on Windows */
 		-ms-touch-action: none;
 		/* Prevent the callout on tap-hold and text selection */
 		-webkit-touch-callout: none;
@@ -457,22 +460,22 @@ body {
 
 		/* Custom Cursor Base 64 Encoded */
 		
-	    #daisyChain{
+		#daisyChain{
 
-	    	padding: 0 0 0px 195px; // (130 + 130) 260px   - 65px
-	    	margin: 10px 0 0 65px ; //push last daisy off the screen by half its width
-	    	opacity : 0;
-	    	left: 100%;
-	    	
-	    	list-style-type: none;
-	    	position: absolute;
-	    	white-space: nowrap;
+			padding: 0 0 0px 195px; // (130 + 130) 260px   - 65px
+			margin: 10px 0 0 65px ; //push last daisy off the screen by half its width
+			opacity : 0;
+			left: 100%;
+			
+			list-style-type: none;
+			position: absolute;
+			white-space: nowrap;
 
-	    	color: #fff;
+			color: #fff;
 			font-family: @fontface-roboto-light;
 			font-size: 12px;
 
-	    	/* Prevent elements to be highlighted on tap */
+			/* Prevent elements to be highlighted on tap */
 			-webkit-tap-highlight-color: rgba(0,0,0,0);
 			/* Put the scroller into the HW Compositing layer right from the start */
 			-webkit-transform: translateZ(0);
@@ -482,31 +485,31 @@ body {
 			transform: translateZ(0); 
 
 
-	    	> li {
+			> li {
 
-	    		background: url('@{img-path}daisy-stem.png') no-repeat center right;
-	    		display: inline-block;
-	    		height: 150px;
-	    		margin: 0 -4px 0 -130px; //-130px; // -4px for the whitespace from inline-block
-	    		padding: 0;
-	    		width: 320px;
-	    		position: relative;
+				background: url('@{img-path}daisy-stem.png') no-repeat center right;
+				display: inline-block;
+				height: 150px;
+				margin: 0 -4px 0 -130px; //-130px; // -4px for the whitespace from inline-block
+				padding: 0;
+				width: 320px;
+				position: relative;
 
-	    		&:nth-child(2n + 1){
+				&:nth-child(2n + 1){
 
-	    			background: url('@{img-path}daisy-stem-r.png') no-repeat center right  ; //rgba(128, 0, 128, 0.1)
-	    		}
+					background: url('@{img-path}daisy-stem-r.png') no-repeat center right  ; //rgba(128, 0, 128, 0.1)
+				}
 
-	    		.daisy{
-	    			position: absolute;
-	    			transform: scale(0.8, 0.5);
-	    			transform-origin : 50%, 50%;
-	    			-moz-transform-origin : 50%, 50%;
-	    			-o-transform-origin : 50%, 50%;
-	    			-webkit-transform-origin : 50%, 50%;
-	    		}
+				.daisy{
+					position: absolute;
+					transform: scale(0.8, 0.5);
+					transform-origin : 50%, 50%;
+					-moz-transform-origin : 50%, 50%;
+					-o-transform-origin : 50%, 50%;
+					-webkit-transform-origin : 50%, 50%;
+				}
 
-	    		.daisyInfo {
+				.daisyInfo {
 
 					background: url('@{img-path}daisy-shadow.png') no-repeat center center;
 					
@@ -571,11 +574,11 @@ body {
 
 									background: url('@{img-path}daisychain-icons.png') no-repeat -9px -78px;
 									border: medium none;
-								    height: 24px;
-								    margin: 0;
-								    padding: 0;
-								    vertical-align: top;
-								    width: 20px;
+									height: 24px;
+									margin: 0;
+									padding: 0;
+									vertical-align: top;
+									width: 20px;
 
 									&:hover {
 
@@ -594,167 +597,96 @@ body {
 
 						.socialPopup {
 
-							.rounded(5px); 
-							.box-shadow(0 0 5px 0 rgba(0, 0, 0, 0.6));
-							.transform-origin(50% 50%);
+							li {
 
-						    background: none repeat scroll 0 0 rgba(255,255,255,0.9);
-						    height: 42px;
-						    left: 50%;
-						    margin: 0 0 0 -42px;
-						    padding: 0;
-						    position: absolute;
-						    bottom: 32px;
-						    width: 88px;
-						    z-index: 999;
-						    overflow: hidden;
-						    white-space:nowrap;
-						    opacity: 0;
-
-						    li {
-
-							    background: url('@{img-path}social-icons-32px.png') no-repeat scroll 0 0 transparent;
-							    display: inline-block;
-							    height: 32px;
-							    line-height: normal;
-							    margin: 5px;
-							    padding: 0;
-							    width: 32px;
-							    cursor: pointer;
-
-
-							    &.fb {
-
-							    	background-position: center 0;
-
-							    	&:hover {
-
-							    		background-position: center -34px;
-							    	}
-							    }
-
-							    &.twitter {
-
-							    	background-position: center -68px;
-
-							    	a {
-							    		display: block;
-							    		height: 32px;
-							    		width : 32px;
-							    	}
-
-							    	&:hover {
-
-							    		background-position: center -102px;
-							    	}
-							    }
-							}
-
-							&:after {
-
-							    
-							    border-color: rgba(255, 255, 255, 0.9) transparent transparent;
-							    border-image: none;
-							    border-style: solid;
-							    border-width: 8px;
-							    bottom: -8px;
-							    content: "";
-							    display: block;
-							    height: 0;
-							    left: 50%;
-							    margin-left: -8px;
-							    position: absolute;	
-							    width: 0;
-							    .transition(all 0.15s);
-							}
-
-							&.visible{
-
-								&:after {
-							    	bottom: -16px;
-							    }
+								
+								height: 32px;
+								line-height: normal;
+								margin: 5px;
+								padding: 0;
+								width: 32px;
 							}
 						}
 					}
 				}
-	    	}
+			}
 
-	    	li.add {
+			li.add {
 
-	    		background-image: url('@{img-path}daisy-stem-add-r.png');
+				background-image: url('@{img-path}daisy-stem-add-r.png');
 
-    			.daisy-add-icon {
+				.daisy-add-icon {
 
-				    left: 69px;
-				    padding: 10px;
-				    position: absolute;
-				    top: 55px;
-				    z-index: 1;
+					left: 69px;
+					padding: 10px;
+					position: absolute;
+					top: 55px;
+					z-index: 1;
 				}
 
 				.pill {
 
 					background-image: url('@{img-path}daisy-head-add-icon.png');
 					background-position: 6px center;
-				    background-repeat: no-repeat;
-				    background-size: 10px 10px;
+					background-repeat: no-repeat;
+					background-size: 10px 10px;
 					font-size: 12px;
-				    color: @green-grass;
-				    left: 30px;
-				    position: absolute;
-				    text-decoration: none;
-				    top: 180px;
-				    width: 85px;
-				    text-align: center;
+					color: @green-grass;
+					left: 30px;
+					position: absolute;
+					text-decoration: none;
+					top: 180px;
+					width: 85px;
+					text-align: center;
 
-				    &.redirect {
-				    	background-image : none;
+					&.redirect {
+						background-image : none;
 
-				    	&:after{
+						&:after{
 
-				    		background: none repeat scroll 0 0 @yellow;
-						    border: 1px solid @green-grass;
-						    border-radius: 30px;
-						    content: attr(data-content);
-						    display: block;
-						    line-height: 19px;
-						    position: absolute;
-						    right: -1px;
-						    text-align: center;
-						    top: 0;
-						    width: 19px;
+							background: none repeat scroll 0 0 @yellow;
+							border: 1px solid @green-grass;
+							border-radius: 30px;
+							content: attr(data-content);
+							display: block;
+							line-height: 19px;
+							position: absolute;
+							right: -1px;
+							text-align: center;
+							top: 0;
+							width: 19px;
 
-				    	}
-				    }
+						}
+					}
 				}
 
 				#redirectMessage {
 
-				    bottom: -27px;
-				    display: block;
-				    left: -20px;
-				    position: absolute;
-				    text-align: center;
-				    text-transform: uppercase;
-				    white-space: normal;
-				    width: 235px;
+					bottom: -17px;
+					display: block;
+					left: 20px;
+					position: absolute;
+					text-align: center;
+					text-transform: uppercase;
+					white-space: normal;
+					width: 150px;
 				}
-    		}
-	    }
+			}
+		}
 	}
 
 	#rearChainContainer {
 
 		top: 0px;
-	    height: 60px;
-	    left: -100%;
-	    opacity: 0;
-	    overflow: hidden;
-	    position: absolute;
-	    top: 0px;
-	    transform: rotate(180deg);
-	    width: 100%;
-	    z-index: 1;
+		height: 60px;
+		left: -100%;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		top: 0px;
+		transform: rotate(180deg);
+		width: 100%;
+		z-index: 1;
 
 		#rearChain {
 
@@ -782,14 +714,14 @@ body {
 	#messageHeader {
 
 		background: url("../img/message-daisy-icon.png") no-repeat scroll left center rgba(0, 0, 0, 0);
-    	color: @navy;
-    	font-family: @fontface-roboto-light;
-	    font-size: 12px;
-	    line-height: 17px;
-	    padding: 0 0 0 19px;
-	    position: absolute;
-	    text-transform: uppercase;
-	    top: -24px;
+		color: @navy;
+		font-family: @fontface-roboto-light;
+		font-size: 12px;
+		line-height: 17px;
+		padding: 0 0 0 19px;
+		position: absolute;
+		text-transform: uppercase;
+		top: -24px;
 	}
 
 	#message {
@@ -804,140 +736,140 @@ body {
 	#messageFooter {
 
 		background: @navy;
-	    bottom: -32px;
-	    color: #fff;
-	    font-family: @fontface-roboto-light;
-	    font-size: 12px;
-	    line-height: 12px;
-	    padding: 10px 0;
-	    position: absolute;
-	    text-transform: uppercase;
-	    width: 100%;
+		bottom: -32px;
+		color: #fff;
+		font-family: @fontface-roboto-light;
+		font-size: 12px;
+		line-height: 12px;
+		padding: 10px 0;
+		position: absolute;
+		text-transform: uppercase;
+		width: 100%;
 
-	    span {
-	    	padding: 0 20px;
-	    	display: block;
+		span {
+			padding: 0 20px;
+			display: block;
 
-	    	&.name {
+			&.name {
 
-	    		float: left;
-	    	}
+				float: left;
+			}
 
-	    	&.date {
+			&.date {
 
-	    		float: right;
-	    	}
-	    }
+				float: right;
+			}
+		}
 	}
 
 	.messageButtons {
-	    
-	    list-style: none outside none;
-	    margin: 0;
-	    padding: 0;
-	    position: absolute;
-	    right: -34px;
-	    top: 0;
-	    width: 34px;
+		
+		list-style: none outside none;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		right: -34px;
+		top: 0;
+		width: 34px;
 
-	    li {
-	    	display : block;
-	    	
-	    	width : 34px;
-	    	height: 34px;
-	    	border-bottom: 1px solid #fff;
-	    	background: url('@{img-path}daisychain-icons.png') 0 0 no-repeat @navy;
+		li {
+			display : block;
+			
+			width : 34px;
+			height: 34px;
+			border-bottom: 1px solid #fff;
+			background: url('@{img-path}daisychain-icons.png') 0 0 no-repeat @navy;
 
-	    	&:last-child {
+			&:last-child {
 
-	    		border: none;
-	    	}
+				border: none;
+			}
 
-	    	&:hover {
+			&:hover {
 
-	    		cursor: pointer;
-	    	}
+				cursor: pointer;
+			}
 
-	    	&.close {
+			&.close {
 
-	    		background-position: -1px -145px;
+				background-position: -1px -145px;
 
-	    		&:hover {
+				&:hover {
 
-	    			background-position: -1px -181px;
-	    		}
-	    	}
+					background-position: -1px -181px;
+				}
+			}
 
-	    	&.add {
+			&.add {
 
-	    		background-position: -1px -217px;
+				background-position: -1px -217px;
 
-	    		&:hover {
-	    			
-	    			background-position: -1px -253px;
-	    		}
-	    	}
+				&:hover {
+					
+					background-position: -1px -253px;
+				}
+			}
 
-	    	&.social {
+			&.social {
 
-	    		background-position: -1px -73px;
+				background-position: -1px -73px;
 
-	    		&:hover {
-	    			
-	    			background-position: -1px -109px;
-	    		}
+				&:hover {
+					
+					background-position: -1px -109px;
+				}
 
-	    		&.open {
+				&.open {
 
-	    			background-position: -1px -325px;
-	    		}
+					background-position: -1px -325px;
+				}
 
-	    		.socialPopup {
+				.socialPopup {
 
-	    			margin: 0;
-				    padding: 0;
-				    position: relative;
-				    top: 34px;
+					margin: 0;
+					padding: 0;
+					position: relative;
+					top: 34px;
 
-				    &:first-child {
-				    	border-top: 1px solid #fff;
-				    }
+					&:first-child {
+						border-top: 1px solid #fff;
+					}
 
-				    li {
+					li {
 
-				    	background: url('@{img-path}social-icons-24px.png') no-repeat center 0 rgba(255,255,255,0.6);
-				    	border-bottom: none;
+						background: url('@{img-path}social-icons-24px.png') no-repeat center 0 rgba(255,255,255,0.6);
+						border-bottom: none;
 
-				    	&.fb {
+						&.fb {
 
-				    		background-position: center 0;
+							background-position: center 0;
 
-				    		&:hover {
+							&:hover {
 
-				    			background-position: center -34px;
-				    		}
+								background-position: center -34px;
+							}
 
-				    	}
+						}
 
-				    	&.twitter {
+						&.twitter {
 
-				    		background-position: center -67px;
+							background-position: center -67px;
 
-				    		a {
-				    			display: block;
-				    			width: 34px;
-				    			height: 34px;
-				    		}
+							a {
+								display: block;
+								width: 34px;
+								height: 34px;
+							}
 
-				    		&:hover {
+							&:hover {
 
-				    			background-position: center -101px;
-				    		}
-				    	}
-				    }
-	    		}
-	    	}
-	    }
+								background-position: center -101px;
+							}
+						}
+					}
+				}
+			}
+		}
 	}	    
 }
 
@@ -969,108 +901,458 @@ body {
 	}
 }
 
+/* ----------- Buttons ------------ */
+
+.button {
+
+	.rounded(5px);
+	.transition(0.6s ease-out);
+
+	color: @yellow-daisy ;
+	font-family: @fontface-norwester;
+	font-size: 20px;
+	line-height: normal;
+	padding: 5px;
+	text-align: center;
+	text-decoration: none;
+
+	&:hover, &.open {
+		background: @yellow-daisy;
+		color: #fff;
+	}
+}
+
 /* --------- Loading ------------- */
 #loading {
 
-    left: 50%;
-    margin-left: -60px;
-    position: absolute;
-    top: 350px;
-    width: 120px;
+	left: 50%;
+	margin-left: -60px;
+	position: absolute;
+	top: 350px;
+	width: 120px;
 
-    span {
-    	
-    	display: inline-block;
-    	vertical-align: middle;
-    	width: 10px;
-    	height: 10px;
-    	margin: 50px auto;
-    	background-color: #fff;
-    	border-radius: 2px;
-    	box-shadow:1px 1px 1px #444444;
-    	-webkit-animation: loading 0.6s infinite alternate ease-in-out;
-    	-moz-animation: loading 0.6s infinite alternate ease-in-out;
-    	animation: loading 0.6s infinite alternate ease-in-out;
-    	opacity: 0.9;
+	span {
+		
+		display: inline-block;
+		vertical-align: middle;
+		width: 10px;
+		height: 10px;
+		margin: 50px auto;
+		background-color: #fff;
+		border-radius: 2px;
+		box-shadow:1px 1px 1px #444444;
+		-webkit-animation: loading 0.6s infinite alternate ease-in-out;
+		-moz-animation: loading 0.6s infinite alternate ease-in-out;
+		animation: loading 0.6s infinite alternate ease-in-out;
+		opacity: 0.9;
 
-    	&:nth-child(2){
-   			-webkit-animation-delay: 0.1s;
-  			-moz-animation-delay: 0.1s;
-  			animation-delay: 0.1s;
-    	}
+		&:nth-child(2){
+			-webkit-animation-delay: 0.1s;
+			-moz-animation-delay: 0.1s;
+			animation-delay: 0.1s;
+		}
 
-    	&:nth-child(3){
+		&:nth-child(3){
 
-   			-webkit-animation-delay: 0.2s;
-  			-moz-animation-delay: 0.2s;
-  			animation-delay: 0.2s;
-    	}
+			-webkit-animation-delay: 0.2s;
+			-moz-animation-delay: 0.2s;
+			animation-delay: 0.2s;
+		}
 
-    	&:nth-child(4){
-   			-webkit-animation-delay: 0.3s;
-  			-moz-animation-delay: 0.3s;
-  			animation-delay: 0.3s;
-    	}
+		&:nth-child(4){
+			-webkit-animation-delay: 0.3s;
+			-moz-animation-delay: 0.3s;
+			animation-delay: 0.3s;
+		}
 
-    	&:nth-child(5){
-   			-webkit-animation-delay: 0.4s;
-  			-moz-animation-delay: 0.4s;
-  			animation-delay: 0.4s;
-    	}
-    }
+		&:nth-child(5){
+			-webkit-animation-delay: 0.4s;
+			-moz-animation-delay: 0.4s;
+			animation-delay: 0.4s;
+		}
+	}
 
-    .loadingText {
+	.loadingText {
 
-	    color: #fff;
-	    font-family: robotolight;
-	    font-size: 12px;
+		color: #fff;
+		font-family: robotolight;
+		font-size: 12px;
+		position: absolute;
+		top: 70px;
+		width: 100px;
+		text-align: center;
+	}
+}
+
+/* ---------- Donation Intro ----------- */
+#donateAnimation {
+
+    height: 300px;
+    margin: -150px auto 0;
+    position: relative;
+    top: 50%;
+    width: 300px;
+    display: none;
+
+	#donateStem {
+
+		left: 63px;
+		position: absolute;
+		top: 0;
+		z-index: 1;
+	}
+
+	#donateFlower {
+
+		background: url('@{img-path}daisy-open-anim.png') no-repeat center 0px;
+		display: block;
+		height: 120px;
+		left: 7px;
+		position: absolute;
+		top: 12px;
+		width: 139px;
+		z-index: 2;
+	}
+
+	#butterfly {
+
+		background: url('@{img-path}butterfly-anim.png') center -300px repeat-y;
+		display: block;
+		height: 100px;
+		opacity: 0;
+		position: absolute;
+		width: 125px;
+	    left: 12px;
+	    top: 16px;
+	    transform: rotate(30deg);
+	    z-index: 3;
+	}
+
+	#donationMessage {
+	    color: white;
+	    font-family: @fontface-roboto-light;
+	    font-size: 14px;
 	    position: absolute;
-	    top: 70px;
-	    width: 100px;
 	    text-align: center;
+	    top: 160px;
+
+	    #donorThanks {
+	    	opacity : 0;
+	    }
+
+	    #donorMessage {
+	    	opacity : 0;
+	    	font-family: @fontface-roboto-lightitalic;
+	    }
+	}
+
+	#donationActions {
+	    bottom: 0;
+	    position: absolute;
+	    width: 100%;
+
+	    #donate-share-wrapper {
+
+	    	position: relative;
+	    	float: left;
+	    }
+
+	    #donate-share {
+
+	    	float: left;
+	    }
+
+	    #donate-continue {
+
+	    	float: right;
+	    }
 	}
 }
 
 /* ---------- Social Popup ----------- */
 
+#daisyChain, 
+#donate-share-wrapper {
+
+	.socialPopup {
+
+		.rounded(5px); 
+		.box-shadow(0 0 5px 0 rgba(0, 0, 0, 0.6));
+		.transform-origin(50% 50%);
+
+		background: none repeat scroll 0 0 rgba(255,255,255,0.9);
+		height: 42px;
+		left: 50%;
+		margin: 0 0 0 -42px;
+		padding: 0;
+		position: absolute;
+		bottom: 32px;
+		width: 88px;
+		z-index: 999;
+		overflow: hidden;
+		white-space:nowrap;
+		opacity: 0;
+
+		li {
+
+			background: url('@{img-path}social-icons-32px.png') no-repeat scroll 0 0 transparent;
+			display: inline-block;
+			height: 32px;
+			line-height: normal;
+			margin: 5px;
+			padding: 0;
+			width: 32px;
+			cursor: pointer;
+
+
+			&.fb {
+
+				background-position: center 0;
+
+				&:hover {
+
+					background-position: center -34px;
+				}
+			}
+
+			&.twitter {
+
+				background-position: center -68px;
+
+				a {
+					display: block;
+					height: 32px;
+					width : 32px;
+				}
+
+				&:hover {
+
+					background-position: center -102px;
+				}
+			}
+		}
+
+		&:after {
+
+			
+			border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+			border-image: none;
+			border-style: solid;
+			border-width: 8px;
+			bottom: -8px;
+			content: "";
+			display: block;
+			height: 0;
+			left: 50%;
+			margin-left: -8px;
+			position: absolute;	
+			width: 0;
+			.transition(all 0.15s);
+		}
+
+		&.visible{
+
+			&:after {
+				bottom: -16px;
+			}
+		}
+	}
+}
+
+/* --------- Footer ---------------- */
+#footerBar {
+
+    background: @sage;
+    bottom: 0;
+    height: 80px;
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+    line-height: 12px;
+    opacity: 0;
+
+    #footerLogo {
+	    position: absolute;
+	    padding: 10px;
+	    left: 0;
+	    top: 0;
+	    width: 138px;
+	}
+
+	#blurb {
+	    font-size: 11px;
+	    height: 60px;
+	    list-style: outside none none;
+	    margin: 0;
+	    padding: 10px;
+	    position: absolute;
+	    right: 0;
+	    top: 0;
+	    width: 200px;
+	    text-align: right;
+
+	    li {
+
+	    	display: block;
+    		margin: 0 0 5px;
+
+    		&#hashtag {
+
+    			font-weight: bold;
+    		}
+
+    		&#contact {
+
+    			a {
+
+    				display: inline-block;
+    			}
+
+    			a:first-child {
+
+	    			margin-right: 2px;
+	    			padding-right: 4px;
+	    			border-right: 1px solid @sage-dark;
+	    		}
+    		}
+
+    		&#design {
+
+    			height: 26px;
+    			margin: 0;
+
+    			a{
+    				background: url('@{img-path}kfy-logo.png') no-repeat right 0;
+    				display: block;
+    				height: 26px;
+
+    				&:hover {
+    					background-position: right -26px;
+    				}
+    			}
+    		}
+	    }
+	}
+
+	#footerNav {
+
+	    height: 80px;
+	    margin: 0 auto;
+	    width: 248px;
+	    padding: 0;
+	    list-style: none;
+
+	    li:first-child {
+
+	    	border-left: 2px solid @sage-dark;
+	    }
+
+	    li {
+		    float: left;
+		    height: 80px;
+		    width: 80px;
+		    border-right: 2px solid @sage-dark;
+		    background: url('@{img-path}footer-icons.png') no-repeat center 0;
+		    cursor: pointer;
+
+		    &.add {
+
+		    	&:hover {
+
+		    		background-position: center -80px;
+		    	}
+
+		    }
+
+		    &.share {
+
+		    	background-position: center -160px;
+
+		    	&:hover {
+
+		    		background-position: center -240px;
+		    	}
+
+		    }
+
+		    &.about {
+
+		    	background-position: center -320px;
+
+		    	&:hover {
+
+		    		background-position: center -400px;
+		    	}
+		    }
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: @sage-dark;
+
+		&:hover {
+			color: @sage-darker;
+		}
+	}
+}
+
+/* ----------- Tooltips ------------ */
+.tooltip {
+
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 11px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: -41px;
+    width: 60px;
+    transform-origin: 50% 100%;
+    opacity: 0;
+
+}
+
 @-webkit-keyframes loading {
 
   0% {
 
-    width: 10px;
-    height: 10px;
-    margin-left: 0;
-    opacity: 0.5;
-    background-color: #fff;
-    -webkit-transform: translateY(0);
+	width: 10px;
+	height: 10px;
+	margin-left: 0;
+	opacity: 0.5;
+	background-color: #fff;
+	-webkit-transform: translateY(0);
   }
 
   100% {
 
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    background-color: @cream;
-    -webkit-transform: translateY(-5px);
+	width: 15px;
+	height: 15px;
+	margin-left: 5px;
+	background-color: @cream;
+	-webkit-transform: translateY(-5px);
   }
 }
 
 @-moz-keyframes loading {
 
   0% {
-    width: 10px;
-    height: 10px;
-    margin-left: 0;
-    background-color: #fff;
-    -moz-transform: translateY(0);
+	width: 10px;
+	height: 10px;
+	margin-left: 0;
+	background-color: #fff;
+	-moz-transform: translateY(0);
   }
 
   100% {
 
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    background-color: @cream;
+	width: 15px;
+	height: 15px;
+	margin-left: 5px;
+	background-color: @cream;
    -moz-transform: translateY(-5px);
   }
 }
@@ -1078,19 +1360,19 @@ body {
 @keyframes loading {
 
   0% {
-    width: 10px;
-    height: 10px;
-    margin-left: 0;
-    background-color: #fff;
-    -moz-transform: translateY(0);
+	width: 10px;
+	height: 10px;
+	margin-left: 0;
+	background-color: #fff;
+	-moz-transform: translateY(0);
   }
 
   100% {
 
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    background-color: @cream;
+	width: 15px;
+	height: 15px;
+	margin-left: 5px;
+	background-color: @cream;
    -moz-transform: translateY(-5px);
   }
 }

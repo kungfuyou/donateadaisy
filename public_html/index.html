@@ -25,7 +25,7 @@
 		<![endif]-->
 		<div id="content">
 
-			<div id="centerpoint"></div>
+			<!-- <div id="centerpoint"></div> -->
 
 		   <div id="introBG">
 		   </div>
@@ -162,6 +162,54 @@
 					<img src="img/logo-cctext.png">
 				</div>
 			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="donationIntro">
+			
+			<div id="donateAnimation" class="is-hidden">
+				<div id="butterfly"></div>
+				<div id="donateFlower"></div>
+				<img id="donateStem" src="img/daisy-open-anim-stem.png" />
+				<div id="donationMessage">
+					<div id="donorThanks">Thank you for your daisy, {{donation.dDonor}} </div>
+					<div id="donorMessage">&ldquo;{{donation.dMessage}}&rdquo;</div>
+				</div>
+				<div id="donationActions">
+					<div id="donate-share-wrapper">
+						<a href="javascript:void(0)" class="button button-white social" id="donate-share">Please Share</a>
+					</div>
+					
+					<a href="javascript:void(0)" class="button button-yellow" id="donate-continue">Continue</a>
+				</div>
+				
+			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="footerBarTemplate">
+			<div id="footerBar">
+				<div id="footerLogo">
+					<img src="img/logo-footer.png">
+				</div>
+				
+				<ul id="footerNav">
+					<li class="add hastooltip" data-tooltip="add a daisy"></li>
+					<li class="about hastooltip" data-tooltip="about us"></li>
+					<li class="share hastooltip" data-tooltip="share"></li>
+				</ul>
+
+				<ul id="blurb">
+					<li id="hashtag"><a href="">#donateadaisy</a></li>
+					<li id="contact">
+						<a href="mailto:info@cancerconnections.org.uk">contact</a>
+						<a href="http://www.cancerconnections.org.uk">Cancer Connections</a>
+					</li>
+					<li id="design"><a href="http://kungfuyou.com"></a></li>
+				</ul>
+			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="tooltipTemplate">
+			<div class="tooltip">{{toolTipText}}</div>
 		</script>
 
 		<!-- Includes -->

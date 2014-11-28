@@ -8,7 +8,11 @@ app.pieTimer = {};
 app.daisyChain = {};
 app.loading = {};
 app.donate = {};
+app.social = {};
 app.fb = {};
+app.donateintro = {};
+app.footer = {};
+app.tooltip = {};
 
 // -------- Helpers ---------  //
 (function(){
@@ -39,7 +43,6 @@ app.fb = {};
 			console.log (i);
 		}, 500); 
 	};
-
 }).apply(app.helpers);
 
 // ------- Intro Screen --------//
@@ -389,29 +392,29 @@ app.fb = {};
 	loadingTemplate = "#loadingChain";
 	loadingID = '#loading';
 
-	obj.init = function(){
+	obj.init = function(container){
 
-		obj.addLoader();
+		obj.addLoader(container);
 	};
 
-	obj.addLoader = function(){
+	obj.addLoader = function(container){
 
 		var templateSource = $(loadingTemplate).html();
 		var template = Handlebars.compile(templateSource);
 		var templateContent = template({});
-		$(app.contentId).append(templateContent);
+		$(container).append(templateContent);
 	}
 
-	obj.removeLoader = function(){
+	obj.removeLoader = function(container){
 
-		$(loadingID).velocity({
+		$(loadingID, container).velocity({
 			opacity : 0 , 
 			top : '-50px'
 		}, {
 			duraion : 400,
 			complete : function(){
 
-				$(loadingID).remove();
+				$(loadingID, container).remove();
 			}
 		});
 	}
@@ -426,7 +429,7 @@ app.fb = {};
 	var daisyChain = '#daisyChain';
 	var messageTemplate = '#messageModal';
 	var daisyContainerTemplate = '#daisyChainTemplate';
-	var socialPopupClass = '.socialPopup';
+	//var socialPopupClass = '.socialPopup'; // moved
 	var windowWidth;
 	var daisyWidth; // adjust for the negative margin
 	var startHeightPercent;
@@ -442,12 +445,13 @@ app.fb = {};
 	var daisyData = [];
 
 	var isScrolling;
+	var twitterMessage;
 
 	obj.daisyScroll = {}
 
 	obj.init = function(){
 
-		app.loading.init();
+		app.loading.init(app.contentId);
 		obj.getDaisyChainJSON();
 		obj.getTotalRaised();
 	}
@@ -479,7 +483,15 @@ app.fb = {};
 
 					$('#daisyChain').velocity(
 						{ opacity: 1, left: 0 }, 
-						{ duration : 1000, easing : "easeOutSine", delay : 500 }
+						{ 
+							duration : 1000, 
+							easing : "easeOutSine", 
+							delay : 500,
+							complete : function(){
+
+								app.footer.showFooter();
+							}
+						}
 					);
 
 					$('#rearChainContainer').velocity(
@@ -564,7 +576,7 @@ app.fb = {};
 				listenY: false,
 				resize: false,
 				shrink: false,
-				speedRatioX: 0.05,
+				speedRatioX: 0.025,
 			}]
 		});
 
@@ -642,7 +654,7 @@ app.fb = {};
 		$("#daisyChain").on('click' , '.daisy-message , .info .message' , function(){
 			
 			if(!isScrolling){
-				obj.closeShareBubble();
+				app.social.closeShareBubble();
 				obj.showDaisyMessage(this);
 			}
 		});
@@ -654,13 +666,14 @@ app.fb = {};
 
 			if( clicked.hasClass('open') ){
 				
-				obj.closeShareBubble();
+				app.social.closeShareBubble();
 
 			} else {
 
-				obj.closeShareBubble();
-				obj.loadShareBubble(clicked, appendTo);
-				obj.daisyChainShareBubbleAnim(clicked);
+				app.social.closeShareBubble();
+				twitterMessage = obj.setTwitterMessage(appendTo);
+				app.social.loadShareBubble(clicked, appendTo, twitterMessage);
+				app.social.daisyChainShareBubbleAnim(clicked);
 			}
 		});
 
@@ -668,7 +681,8 @@ app.fb = {};
 			e.preventDefault();
 			//app.donate.goToDonateUrl();
 			if(!app.donate.redirecting){
-				app.donate.setRedirectMessage();
+
+				app.donate.init();
 			}
 		})
 	}
@@ -680,7 +694,8 @@ app.fb = {};
 		});
 		/* Message Add Button Behaviour */
 		$("#messageContainer").on('click' , '.messageButtons .add' , function(){
-			console.log('add');
+			
+			app.donate.goToDonateUrl();
 		});
 		/* Message Share Button Behaviour */
 		$("#messageContainer").on('click' , '.messageButtons .social' , function(){
@@ -689,95 +704,30 @@ app.fb = {};
 
 			if(clicked.hasClass('open') ){
 				
-				obj.closeShareBubble();
+				app.social.closeShareBubble();
 
 			} else {
 
-				obj.closeShareBubble();
-				obj.loadShareBubble(clicked , null);
-				obj.messageShareBubbleAnim(clicked);
+				app.social.closeShareBubble();
+				twitterMessage = obj.setTwitterMessage(clicked);
+				app.social.loadShareBubble(clicked , null, twitterMessage);
+				app.social.messageShareBubbleAnim(clicked);
 			}
 		});
 	}
 
-	obj.addShareDependencies = function(){
-		
-		$('.fb').on("click" , function(e){
-			console.log('facecook');
-			//var fbLoginStatus = app.fb.shareDaisy();
-		});
-
-		//Create Twitter Button
-		var twitterSelector = document.getElementById('twitterButton');
-		twttr.widgets.load(twitterSelector);
-	}
-
-	obj.setRaisedAmount = function(totalRaised){
-	
-		$('#raisedAmount').html(totalRaised);
-	}
-
-	obj.loadShareBubble = function(clicked, appendTo){
-		
-		appendTo = appendTo || clicked;
+	obj.setTwitterMessage = function(appendTo){
 
 		var daisyIndex = obj.getDaisyIndex(appendTo);
 		var donationID = obj.getDonationId(daisyIndex);
 		var donorDisplayName = obj.getDonorDisplayName(donationID);
 		var twitterMessage = donorDisplayName  + " added daisy no." + daisyIndex + " to Cancer Connections daisy chain. Donate a Daisy!"
-		var twitterUrl = "http://donateadaisy.org";
-		var templateSource = $(socialPopupTemplate).html();
-		var template = Handlebars.compile(templateSource);
-		var templateContent = template({
-			message : encodeURI(twitterMessage),
-			url : encodeURIComponent(twitterUrl)
-		});
-
-		appendTo.append(templateContent);
-		clicked.addClass('open');
+		return encodeURI(twitterMessage);
 	}
 
-	obj.daisyChainShareBubbleAnim = function(clicked){
-		
-		clicked.siblings(socialPopupClass).velocity({
-
-			opacity : [1 , 0],
-			scale: [1, 0]	
-		},{
-			duration: 300,
-			easing: "easeOutQuart",
-			complete: function(el){
-				//Show the :after arrow
-				$(el).css({'overflow' : 'visible'}).delay(1).queue(function(){
-					$(this).addClass('visible').dequeue();
-				});
-				// add button dependencies
-				obj.addShareDependencies();
-			}
-		});
-	}
-
-	obj.messageShareBubbleAnim = function(clicked){
-
-		clicked.children(socialPopupClass).velocity(
-
-			"slideDown",
-			
-			{
-				duration: 300,
-				easing: "easeOutQuart",
-				complete: function(el){
-					// add button dependencies
-					obj.addShareDependencies();
-				}
-			}
-		)
-	};
-
-	obj.closeShareBubble = function(){
-
-		$('.social').removeClass('open');
-		$(socialPopupClass).remove();
+	obj.setRaisedAmount = function(totalRaised){
+	
+		$('#raisedAmount').html(totalRaised);
 	}
 
 	obj.showDaisyMessage = function(daisy){
@@ -929,14 +879,38 @@ app.fb = {};
 	var redirecting;
 	var timerVal = 5;
 
+	obj.init = function(){
+
+		obj.redirecting = true;
+		obj.cacheSelectors();
+		obj.setRedirectMessage();
+		obj.changeDaisyImage();
+		obj.startCountdown();
+	}
+
+	obj.cacheSelectors = function(){
+
+		obj.addDaisy = $('li.add');
+	}
+
 	obj.setRedirectMessage = function(){
 
-		$('li.add .pill').attr('data-content' , timerVal).addClass('redirect').text('redirect in');
-		$('li.add').append("<div id='redirectMessage'>" + redirectMessage + "</div>");
+		obj.addDaisy.children('.pill').attr('data-content' , timerVal).addClass('redirect').text('redirect in');
+		obj.addDaisy.append("<div id='redirectMessage'>" + redirectMessage + "</div>");
 		$('#redirectMessage').velocity('fadeIn' , { duration : 500});
-		obj.redirecting = true;
-		//Set timeout here
-		obj.startCountdown();
+	}
+
+	obj.changeDaisyImage = function(){
+
+		obj.addDaisy.children('.daisy-add-icon').remove().end().children('.daisy').attr({
+			'src' : '../img/daisy-head-closed.png' ,
+			'style' : 'transform : scale(1)'
+		}).css({
+			'top' : '-15px',
+			'left' : '28px'
+		}).end().css({'background-image' : 'url(../img/daisy-stem-r.png)'});
+
+		obj.addDaisy.velocity({opacity : [1 , 0]} , {duration : 400});
 	}
 
 	obj.startCountdown = function(){
@@ -957,8 +931,33 @@ app.fb = {};
 
 		window.location.href = jgUrl + shortUrl + "4w350m3/donate/?amount=" + suggestedAmount + "&currency=" + currency + "&exitUrl=" + exitUrl;
 	}
+}).apply(app.donate);
+
+// -------- Donations Intro --------//
+(function(){
+
+	var obj = this;
+	var donationIntroTemplate = "#donationIntro";
+	var templateContainer = "#introBG";
+	var twitterMessage = encodeURI("I have just added a daisy to Cancer Connections Daisy Chain! Read my message and add your own");
+	obj.container = {};
+	obj.addDaisy;
+
+	obj.init = function(donationId){
+
+		obj.getDonationStatus(donationId);
+		obj.addDependencies();
+	}
+
+	obj.cacheSelectors = function(){
+
+		obj.container = $('#donateAnimation');
+	}
 
 	obj.getDonationStatus = function(donationId){
+
+		$(templateContainer).css({'display' : 'block'});
+		app.loading.init(templateContainer);
 
 		var donationStatus = $.ajax({
 
@@ -979,22 +978,336 @@ app.fb = {};
 				if(result.status = "success") {
 
 					console.log(result);
-
-					//daisyData = result.data
-					// Add the Daisy Chain Container to the DOM
-					//var templateSource = $(daisyContainerTemplate).html();
-					//var template = Handlebars.compile(templateSource);
-					//var templateContent = template({daisies : daisyData});
-					//$(app.contentId).append(templateContent);
+					obj.loadDonationIntro(result.data);
 
 				} else {
 
 					console.log('the data did not return in the correct format');
 				}	
+			},
+
+			complete : function(){
+
+				app.loading.removeLoader(templateContainer);
 			}
 		});
 	}
-}).apply(app.donate);
+
+	obj.loadDonationIntro = function(donationData) {
+
+		var templateSource = $(donationIntroTemplate).html();
+		var template = Handlebars.compile(templateSource);
+		var templateContent = template({donation : donationData});
+		$(templateContainer).append(templateContent);
+
+		obj.cacheSelectors();
+		obj.startDonationIntro();
+	}
+
+	obj.startDonationIntro = function(){
+		
+		obj.container.fadeIn(1000, function(){
+			
+			$('#donateFlower').velocity({
+
+				backgroundPositionY : '-480px'
+
+			} , {
+
+				easing : [4],
+				duration : 1200,
+				loop : false,
+				delay: 400
+			});
+			//$(templateContainer).remove();
+		});
+
+		$('#donorThanks').velocity({
+			translateY : [0 , -50],
+			opacity : [1, 0]
+		} , {
+			delay : 500,
+			duration : 1000
+		});
+
+		$('#donorMessage').velocity({
+			translateY : [0 , -50],
+			opacity : [1, 0]
+		} , {
+
+			duration : 1000
+		});
+
+		$('#butterfly').velocity({
+			rotateZ : 30
+		}).velocity({
+			opacity : [1,0],
+			translateY : [0, -20],
+			translateX : [0, -10],
+			backgroundPositionY : 0
+		}, {
+			delay : 1600,
+			easing : [3],
+			duration : 900,
+			loop : false
+		})
+	}
+
+	obj.addDependencies = function(){
+
+		$(templateContainer).on("click" , ".social" , function(e){
+			e.preventDefault();
+			
+			var clicked = $(this);
+			var appendTo = clicked.parent();
+
+			if( clicked.hasClass('open') ){
+				
+				app.social.closeShareBubble();
+
+			} else {
+
+				app.social.closeShareBubble();
+				app.social.loadShareBubble(clicked, appendTo, twitterMessage);
+				app.social.daisyChainShareBubbleAnim(clicked);
+			}
+		});
+
+		$(templateContainer).on('click' , "#donate-continue" , function(e){
+
+			e.preventDefault();
+
+			$('#butterfly').velocity({
+
+				backgroundPositionY : -3000,
+				top: '-=300px',
+				left: '+=100px',
+				rotateZ : 0,
+				opacity: 0
+			},{
+				duration: 2000,
+				easing: [30],	
+			})
+			
+			var flyButterfly = setTimeout(function(){
+				$(templateContainer).addClass('clean-up');
+				obj.cleanUp();
+				//$(templateContainer).remove();
+				clearTimeout(flyButterfly);
+			}, 2100);
+		});
+
+	}
+
+	obj.cleanUp = function(){
+
+		var byebyeButterfly = setTimeout(function(){
+				$(templateContainer).remove();
+				clearTimeout(byebyeButterfly);
+			}, 500);
+	}
+}).apply(app.donateintro);
+
+// -------- Social ------------ //
+(function(){
+
+	var obj = this;
+	var socialPopupClass = '.socialPopup';
+	var twitterUrl = encodeURIComponent("http://donateadaisy.org");
+
+	obj.closeShareBubble = function(){
+
+		$('.social').removeClass('open');
+		$(socialPopupClass).remove();
+	}
+
+	obj.loadShareBubble = function(clicked, appendTo, twitterMessage){
+		
+		appendTo = appendTo || clicked;
+		
+		// This moved - needs message sending through
+		var templateSource = $(socialPopupTemplate).html();
+		var template = Handlebars.compile(templateSource);
+		var templateContent = template({
+			message : twitterMessage,
+			url : twitterUrl
+		});
+
+		appendTo.append(templateContent);
+		clicked.addClass('open');
+	}
+
+	obj.daisyChainShareBubbleAnim = function(clicked){
+		
+		clicked.siblings(socialPopupClass).velocity({
+
+			opacity : [1 , 0],
+			scale: [1, 0]	
+		},{
+			duration: 300,
+			easing: "easeOutQuart",
+			complete: function(el){
+				//Show the :after arrow
+				$(el).css({'overflow' : 'visible'}).delay(1).queue(function(){
+					$(this).addClass('visible').dequeue();
+				});
+				// add button dependencies
+				obj.addShareDependencies();
+			}
+		});
+	}
+
+	obj.messageShareBubbleAnim = function(clicked){
+
+		clicked.children(socialPopupClass).velocity(
+
+			"slideDown",
+			
+			{
+				duration: 300,
+				easing: "easeOutQuart",
+				complete: function(el){
+					// add button dependencies
+					obj.addShareDependencies();
+				}
+			}
+		)
+	}
+
+	obj.addShareDependencies = function(){
+		
+		$('.fb').on("click" , function(e){
+			console.log('facecook');
+			//var fbLoginStatus = app.fb.shareDaisy();
+		});
+
+		//Create Twitter Button
+		var twitterSelector = document.getElementById('twitterButton');
+		twttr.widgets.load(twitterSelector);
+	}
+}).apply(app.social);
+
+// -------- Footer ------------ //
+(function(){
+
+	var obj = this;
+	var templateContainer;
+
+	obj.init = function() {
+
+		obj.addFooterTemplate();
+	};
+
+	obj.cacheSelectors = function(){};
+
+	obj.addDependencies = function(){
+		console.log('wdcsd');
+	};
+
+	obj.addFooterTemplate = function(){
+
+		templateContainer = app.contentId;
+		var templateSource = $(footerBarTemplate).html();
+		var template = Handlebars.compile(templateSource);
+		var templateContent = template();
+		$(templateContainer).append(templateContent);
+		obj.addDependencies();
+	};
+
+	obj.showFooter = function(){
+
+		$('#footerBar').velocity({
+
+			translateY : [0, 80],
+			opacity: 1
+		},{
+			duration: 600
+		});
+	};
+}).apply(app.footer);
+
+// -------- Tooltips ------------ //
+(function(){
+
+	var obj = this;
+	var showToolTip;
+	var hasToolTip = ".hastooltip";
+	var tooltipClear = 5;
+
+	obj.init = function(){
+
+		obj.addDependencies();
+	}
+
+	obj.addDependencies = function(){
+	
+		$(app.contentId).on("mouseenter" , hasToolTip , function(){
+
+			obj.addToolTip(this);
+		});
+
+		$(app.contentId).on("mouseleave" , hasToolTip , function(){
+			
+			clearTimeout(showToolTip);
+			obj.removeToolTip(this);
+			
+		});
+	}
+
+	obj.addToolTip = function(ele){
+
+		var toolTipText = $(ele).attr('data-tooltip');
+		showToolTip = setTimeout(function(){
+
+			templateContainer = ele;
+			var templateSource = $(tooltipTemplate).html();
+			var template = Handlebars.compile(templateSource);
+			var templateContent = template({toolTipText : toolTipText});
+			$(templateContainer).append(templateContent);
+			clearTimeout(showToolTip);
+			obj.showToolTip(ele);
+			
+		}, 500);	
+	}
+
+	obj.showToolTip = function(ele){
+
+		var toolTip = $(ele).children('.tooltip');
+		var height = toolTip.outerHeight();
+
+
+		toolTip.css({'top' : 0 - (height + tooltipClear) + "px"}).velocity({
+
+			opacity : [1, 0],
+			scale : [1,0]
+		},{
+			duration : 200,
+			easing : [100, 15]
+		});
+
+	}
+
+	obj.removeToolTip = function(ele){
+
+		var toolTip = $(ele).children('.tooltip');
+
+		toolTip.velocity({
+
+			opacity : [0, 1],
+			scale : [0,1]
+		},{
+			duration : 200,
+			easing : "easeInQuad",
+			complete : function(){
+				toolTip.remove();
+			}
+		});
+
+	}
+
+
+
+}).apply(app.tooltip);
 
 // --------  The main app controller --------- //
 (function(){
@@ -1019,8 +1332,7 @@ app.fb = {};
 
 		if(donationId && donationId != ''){
 			//check the status of the donation
-			console.log(donationId);
-			app.donate.getDonationStatus(donationId);
+			app.donateintro.init(donationId);
 			//start the thank you animation
 		} else {
 			//Start the intro & text Slides
@@ -1030,19 +1342,17 @@ app.fb = {};
 
 		app.daisyChain.init();
 		app.fb.init();
+		app.footer.init();
+		app.tooltip.init();
 	},
 
 	obj.cacheSelectors = function(){
 
 		obj.contentId = $('#content');
 	}
-
 }).apply(app);
 
 // --------  The main app controller Stuff to sort --------- //
-
 $(document).ready( function(){
-
 	app.init();
 });
-
