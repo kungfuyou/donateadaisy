@@ -85,9 +85,9 @@ body {
 	
 	.fontface-roboto();
 	background: url('@{img-path}sky.png') repeat-x center 0 @green-grass;
-	background-attachment: fixed; 
+	//background-attachment: fixed; 
 	font-size: 16px;
-	overflow: hidden;
+	overflow-x: hidden;
 	height: 100%;
 	//font-family: @fontface-roboto-lightitalic;
  }
@@ -402,7 +402,7 @@ body {
 	height: 155px;
 	left: 50%;
 	margin-left: -185px;
-	position: fixed;
+	position: absolute;
 	top: 65px;
 	width: 370px;
 }
@@ -422,6 +422,135 @@ body {
 		line-height: 32px;
 		color: @blue;
 	}
+}
+
+#sun {
+
+    left: 6%;
+    position: absolute;
+    top: -100px;
+}
+
+#clouds {
+
+    position: absolute;
+    right: 15%;
+    top: -75px;
+}
+
+#daisyGroups {
+	position: absolute;
+	width: 1106px;
+	height: 106px;
+	left: 50%;
+	margin: 0 0 0 -553px;
+	top:175px;
+
+	.daisyGroup {
+		position : absolute;
+		opacity: 0.6;
+	}
+
+	#dg1 {
+		top: 55px;
+		left : 0;
+		transform: scale(0);
+	}
+
+	#dg2 {
+		left: 91px;
+	    top: 55px;
+	    width: 51px;
+	    transform: scale(0);
+	}
+
+	#dg3 {
+		left: 127px;
+	    top: 19px;
+	    transform: rotate(-8deg) scale(0);
+	    width: 75px;
+	}
+
+	#dg4 {
+		left: 204px;
+	    top: 28px;
+	    transform: rotate(-10deg) scale(0);
+	    width: 68px;
+	}
+
+	#dg5 {
+		left: 277px;
+	    top: 17px;
+	    width: 50px;
+	    transform: scale(0);
+	}
+
+	#dg6 {
+		left: 320px;
+    	top: 50px;
+    	 transform: scale(0);
+	}
+
+	#dg7 {
+		left: 440px;
+	    top: 55px;
+	    transform: rotate(-10deg) scale(0);
+	    width: 65px;
+	}
+
+	#dg8 {
+
+		left: 590px;
+	    top: 5px;
+	    transform: rotate(5deg) scale(0);
+	    width: 60px;
+	}
+
+	#dg9 {
+		right: 442px;
+	    top: 49px;
+	    transform: rotate(-5deg) scale(0);
+	}
+
+	#dg10 {
+		right: 394px;
+	    top: 35px;
+	    transform: rotate(5deg) scale(0);
+	    width: 44px;
+	}
+	#dg11 {
+		right: 325px;
+	    top: 43px;
+	    width: 75px;
+	    transform: scale(0);
+	}
+
+	#dg12 {
+		right: 267px;
+	    top: 55px;
+	    transform: rotate(9deg) scale(0);
+	}
+
+	#dg13 {
+		right: 207px;
+    	top: 30px;
+    	width: 55px;
+    	transform: scale(0);
+	}
+
+	#dg14 {
+		right: 130px;
+    	top: 45px;
+    	transform: scale(0);
+	}
+
+	#dg15 {
+		right: 59px;
+	    top: 39px;
+	    transform: rotate(-8deg) scale(0);
+	    width: 75px;
+	}
+
 }
 
 /* ---------- Daisy Chain -------------- */
@@ -1170,8 +1299,10 @@ body {
     z-index: 3;
     line-height: 12px;
     opacity: 0;
+    overflow: hidden;
 
     #footerLogo {
+
 	    position: absolute;
 	    padding: 10px;
 	    left: 0;
@@ -1180,6 +1311,7 @@ body {
 	}
 
 	#blurb {
+
 	    font-size: 11px;
 	    height: 60px;
 	    list-style: outside none none;
@@ -1221,7 +1353,7 @@ body {
     			height: 26px;
     			margin: 0;
 
-    			a{
+    			a {
     				background: url('@{img-path}kfy-logo.png') no-repeat right 0;
     				display: block;
     				height: 26px;
@@ -1248,51 +1380,200 @@ body {
 	    }
 
 	    li {
+
+	    	.transition(background-color 0.4s);
+
 		    float: left;
 		    height: 80px;
 		    width: 80px;
 		    border-right: 2px solid @sage-dark;
 		    background: url('@{img-path}footer-icons.png') no-repeat center 0;
 		    cursor: pointer;
-
+		    background-color : @sage;
+		    
 		    &.add {
 
-		    	&:hover {
+		    	&:hover,
+		    	&.open {
 
 		    		background-position: center -80px;
 		    	}
 
+		    	&.open {
+
+		    		background-color: lighten(@orange-light, 10%);
+
+		    		&:after {
+				    	
+				    	display: none;
+				    }
+		    	}
 		    }
 
-		    &.share {
+		    &.social {
 
 		    	background-position: center -160px;
 
-		    	&:hover {
+		    	&:hover,
+		    	&.open {
 
 		    		background-position: center -240px;
 		    	}
 
+		    	&.open {
+
+		    		background-color: lighten(@purple, 25%);
+
+		    		&:after {
+
+		    			margin-left: 73px;
+		    		}
+		    	}
 		    }
 
 		    &.about {
 
 		    	background-position: center -320px;
 
-		    	&:hover {
+		    	&:hover, 
+		    	&.open {
 
 		    		background-position: center -400px;
 		    	}
+
+		    	&.open{
+
+		    		background-color: lighten(@intro-blue , 15%);
+		    	}
+		    }
+
+		    &.open {
+
+		    	&:after {
+		   
+				    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+				    border-color: rgba(238, 252, 239, 0.9) transparent transparent;
+				    border-image: none;
+				    border-style: solid;
+				    border-width: 10px;
+				    content: "";
+				    display: block;
+				    height: 0;
+				    left: 50%;
+				    margin-left: -10px;
+				    position: absolute;
+				    top: -1px;
+				    width: 0;
+				}
 		    }
 		}
 	}
 
 	a {
+
 		text-decoration: none;
 		color: @sage-dark;
 
 		&:hover {
+
 			color: @sage-darker;
+		}
+	}
+
+	#infoContainerWrapper {
+
+		 background: none repeat scroll 0 0 rgba(238, 252, 239, 0.9);
+		    bottom: 81px;
+		    height: 0px;
+		    position: absolute;
+		    width: 100%;
+		    overflow: hidden;
+		    //display: none;
+
+		.close {
+
+		    background: none repeat scroll 0 0 @sage-dark;
+		    color: rgba(238, 252, 239, 0.9);
+		    display: block;
+		    line-height: 16px;
+		    padding: 2px 8px 5px;
+		    position: absolute;
+		    right: 10px;
+		    top: 10px;
+
+			    &:hover {
+
+			    	 background: none repeat scroll 0 0 @sage-darker;
+			    }
+			}
+
+		#infoContainer {
+
+		   padding-top: 43px;
+
+		    #info {
+
+			    color: @sage-darker;
+			    font-family: mathlete;
+			    font-size: 21px;
+			    letter-spacing: 1px;
+			    line-height: 24px;
+			    margin: 0 auto;
+			    padding: 0 10%;
+			    width: 80%;
+
+			    p {
+			    	margin: 0 0 20px 0;
+			    }
+			}
+
+			.socialPopup {
+
+				height: 80px;
+			    list-style: outside none none;
+			    margin: -20px auto 0 auto;
+			    padding: 0;
+			    position: relative;
+			    width: 160px;
+
+			    li {
+
+			    	background: url("@{img-path}social-icons-80px.png") no-repeat center 0;
+			    	float: left;
+				    height: 80px;
+				    width: 80px;
+				    cursor: pointer;
+
+				    &.fb {
+
+				    	background-position: center 0;
+
+				    	&:hover {
+
+				    		background-position: center -80px;
+
+				    	}
+				    }
+
+				    &.twitter {
+
+				    	background-position: center -160px;
+
+
+				    	&:hover {
+
+				    		background-position: center -240px;
+				    	}
+				    }
+
+				    a {
+
+				    	display: block;
+				    	width: 80px;
+				    	height: 80px;
+				    }
+			    }
+			}
 		}
 	}
 }
@@ -1312,7 +1593,6 @@ body {
     width: 60px;
     transform-origin: 50% 100%;
     opacity: 0;
-
 }
 
 @-webkit-keyframes loading {

@@ -13,7 +13,6 @@ function getTotal() {
 	global $pageShortName;
 
 	$getPageObject = $client->Page->ListAll();
-
 	foreach ($getPageObject as $key => $value){ 
 
 		if($value->pageShortName == $pageShortName) {

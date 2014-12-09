@@ -29,6 +29,28 @@
 
 		   <div id="introBG">
 		   </div>
+		  
+		   	<img src='img/sun.png' id="sun"/>
+
+		   	<img src='img/clouds.png' id="clouds" />
+
+		   	<div id="daisyGroups">
+		   		<img src='img/daisy-group-1.png' class="daisyGroup" id="dg1">
+		   		<img src='img/daisy-group-2.png' class="daisyGroup" id="dg2">
+		   		<img src='img/daisy-group-3.png' class="daisyGroup" id="dg3">
+		   		<img src='img/daisy-group-1.png' class="daisyGroup" id="dg4">
+		   		<img src='img/daisy-group-2.png' class="daisyGroup" id="dg5">
+		   		<img src='img/daisy-group-4.png' class="daisyGroup" id="dg6">
+		   		<img src='img/daisy-group-3.png' class="daisyGroup" id="dg7">
+		   		<img src='img/daisy-group-1.png' class="daisyGroup" id="dg8">
+		   		<img src='img/daisy-group-2.png' class="daisyGroup" id="dg9">
+		   		<img src='img/daisy-group-3.png' class="daisyGroup" id="dg10">
+		   		<img src='img/daisy-group-3.png' class="daisyGroup" id="dg11">
+		   		<img src='img/daisy-group-3.png' class="daisyGroup" id="dg12">
+		   		<img src='img/daisy-group-1.png' class="daisyGroup" id="dg13">
+		   		<img src='img/daisy-group-1.png' class="daisyGroup" id="dg14">
+		   		<img src='img/daisy-group-2.png' class="daisyGroup" id="dg15">
+		   	</div>
 
 			<div id="logo">
 				<img src='img/dd_logo.png' alt='donate a daisy for Cancer Connections' />
@@ -38,6 +60,8 @@
 				<div class="blue pill">Total Donations</div>
 				<div id="raisedAmount">£0.00</div>
 			</div>
+
+
 		</div>
 
 		<!-- Templates -->
@@ -186,15 +210,18 @@
 		</script>
 
 		<script type="text/x-handlebars-template" id="footerBarTemplate">
+			
 			<div id="footerBar">
+
 				<div id="footerLogo">
+
 					<img src="img/logo-footer.png">
 				</div>
 				
 				<ul id="footerNav">
-					<li class="add hastooltip" data-tooltip="add a daisy"></li>
-					<li class="about hastooltip" data-tooltip="about us"></li>
-					<li class="share hastooltip" data-tooltip="share"></li>
+					<li class="add hastooltip" id="footerAdd" data-tooltip="add a daisy"></li>
+					<li class="about hastooltip" id="footerAbout" data-tooltip="about us"></li>
+					<li class="social hastooltip" id="footerSocial" data-tooltip="share"></li>
 				</ul>
 
 				<ul id="blurb">
@@ -205,7 +232,22 @@
 					</li>
 					<li id="design"><a href="http://kungfuyou.com"></a></li>
 				</ul>
+
+				<div id="infoContainerWrapper">
+					<a href="javascript:void(0)" class="close">x</a>
+					<div id="infoContainer"></div>
+				</div>
+
 			</div>
+		</script>
+
+		<script type="text/x-handlebars-template" id="aboutUsTemplate">
+
+				
+				<div id="info">
+					{{{info}}}
+				</div>
+
 		</script>
 
 		<script type="text/x-handlebars-template" id="tooltipTemplate">

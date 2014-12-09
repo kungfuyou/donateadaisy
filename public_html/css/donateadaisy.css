@@ -400,9 +400,8 @@ html {
 body {
   font-family: 'robotoregular', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   background: url('../img/sky.png') repeat-x center 0 #68934f;
-  background-attachment: fixed;
   font-size: 16px;
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100%;
 }
 body em,
@@ -685,7 +684,7 @@ body strong em {
   height: 155px;
   left: 50%;
   margin-left: -185px;
-  position: fixed;
+  position: absolute;
   top: 65px;
   width: 370px;
 }
@@ -702,6 +701,113 @@ body strong em {
   letter-spacing: 1px;
   line-height: 32px;
   color: #3a7ebb;
+}
+#sun {
+  left: 6%;
+  position: absolute;
+  top: -100px;
+}
+#clouds {
+  position: absolute;
+  right: 15%;
+  top: -75px;
+}
+#daisyGroups {
+  position: absolute;
+  width: 1106px;
+  height: 106px;
+  left: 50%;
+  margin: 0 0 0 -553px;
+  top: 175px;
+}
+#daisyGroups .daisyGroup {
+  position: absolute;
+  opacity: 0.6;
+}
+#daisyGroups #dg1 {
+  top: 55px;
+  left: 0;
+  transform: scale(0);
+}
+#daisyGroups #dg2 {
+  left: 91px;
+  top: 55px;
+  width: 51px;
+  transform: scale(0);
+}
+#daisyGroups #dg3 {
+  left: 127px;
+  top: 19px;
+  transform: rotate(-8deg) scale(0);
+  width: 75px;
+}
+#daisyGroups #dg4 {
+  left: 204px;
+  top: 28px;
+  transform: rotate(-10deg) scale(0);
+  width: 68px;
+}
+#daisyGroups #dg5 {
+  left: 277px;
+  top: 17px;
+  width: 50px;
+  transform: scale(0);
+}
+#daisyGroups #dg6 {
+  left: 320px;
+  top: 50px;
+  transform: scale(0);
+}
+#daisyGroups #dg7 {
+  left: 440px;
+  top: 55px;
+  transform: rotate(-10deg) scale(0);
+  width: 65px;
+}
+#daisyGroups #dg8 {
+  left: 590px;
+  top: 5px;
+  transform: rotate(5deg) scale(0);
+  width: 60px;
+}
+#daisyGroups #dg9 {
+  right: 442px;
+  top: 49px;
+  transform: rotate(-5deg) scale(0);
+}
+#daisyGroups #dg10 {
+  right: 394px;
+  top: 35px;
+  transform: rotate(5deg) scale(0);
+  width: 44px;
+}
+#daisyGroups #dg11 {
+  right: 325px;
+  top: 43px;
+  width: 75px;
+  transform: scale(0);
+}
+#daisyGroups #dg12 {
+  right: 267px;
+  top: 55px;
+  transform: rotate(9deg) scale(0);
+}
+#daisyGroups #dg13 {
+  right: 207px;
+  top: 30px;
+  width: 55px;
+  transform: scale(0);
+}
+#daisyGroups #dg14 {
+  right: 130px;
+  top: 45px;
+  transform: scale(0);
+}
+#daisyGroups #dg15 {
+  right: 59px;
+  top: 39px;
+  transform: rotate(-8deg) scale(0);
+  width: 75px;
 }
 /* ---------- Daisy Chain -------------- */
 #daisyChainMaster {
@@ -1289,6 +1395,7 @@ body strong em {
   z-index: 3;
   line-height: 12px;
   opacity: 0;
+  overflow: hidden;
 }
 #footerBar #footerLogo {
   position: absolute;
@@ -1347,27 +1454,65 @@ body strong em {
   border-left: 2px solid #929f8b;
 }
 #footerBar #footerNav li {
+  -webkit-transition: background-color 0.4s;
+  -moz-transition: background-color 0.4s;
+  -ms-transition: background-color 0.4s;
+  -o-transition: background-color 0.4s;
   float: left;
   height: 80px;
   width: 80px;
   border-right: 2px solid #929f8b;
   background: url('../img/footer-icons.png') no-repeat center 0;
   cursor: pointer;
+  background-color: #c3d4b9;
 }
-#footerBar #footerNav li.add:hover {
+#footerBar #footerNav li.add:hover,
+#footerBar #footerNav li.add.open {
   background-position: center -80px;
 }
-#footerBar #footerNav li.share {
+#footerBar #footerNav li.add.open {
+  background-color: #fcc46d;
+}
+#footerBar #footerNav li.add.open:after {
+  display: none;
+}
+#footerBar #footerNav li.social {
   background-position: center -160px;
 }
-#footerBar #footerNav li.share:hover {
+#footerBar #footerNav li.social:hover,
+#footerBar #footerNav li.social.open {
   background-position: center -240px;
+}
+#footerBar #footerNav li.social.open {
+  background-color: #ddabc2;
+}
+#footerBar #footerNav li.social.open:after {
+  margin-left: 73px;
 }
 #footerBar #footerNav li.about {
   background-position: center -320px;
 }
-#footerBar #footerNav li.about:hover {
+#footerBar #footerNav li.about:hover,
+#footerBar #footerNav li.about.open {
   background-position: center -400px;
+}
+#footerBar #footerNav li.about.open {
+  background-color: #7eb0c7;
+}
+#footerBar #footerNav li.open:after {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border-color: rgba(238, 252, 239, 0.9) transparent transparent;
+  border-image: none;
+  border-style: solid;
+  border-width: 10px;
+  content: "";
+  display: block;
+  height: 0;
+  left: 50%;
+  margin-left: -10px;
+  position: absolute;
+  top: -1px;
+  width: 0;
 }
 #footerBar a {
   text-decoration: none;
@@ -1375,6 +1520,75 @@ body strong em {
 }
 #footerBar a:hover {
   color: #565c53;
+}
+#footerBar #infoContainerWrapper {
+  background: none repeat scroll 0 0 rgba(238, 252, 239, 0.9);
+  bottom: 81px;
+  height: 0px;
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+}
+#footerBar #infoContainerWrapper .close {
+  background: none repeat scroll 0 0 #929f8b;
+  color: rgba(238, 252, 239, 0.9);
+  display: block;
+  line-height: 16px;
+  padding: 2px 8px 5px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+#footerBar #infoContainerWrapper .close:hover {
+  background: none repeat scroll 0 0 #565c53;
+}
+#footerBar #infoContainerWrapper #infoContainer {
+  padding-top: 43px;
+}
+#footerBar #infoContainerWrapper #infoContainer #info {
+  color: #565c53;
+  font-family: mathlete;
+  font-size: 21px;
+  letter-spacing: 1px;
+  line-height: 24px;
+  margin: 0 auto;
+  padding: 0 10%;
+  width: 80%;
+}
+#footerBar #infoContainerWrapper #infoContainer #info p {
+  margin: 0 0 20px 0;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup {
+  height: 80px;
+  list-style: outside none none;
+  margin: -20px auto 0 auto;
+  padding: 0;
+  position: relative;
+  width: 160px;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup li {
+  background: url("../img/social-icons-80px.png") no-repeat center 0;
+  float: left;
+  height: 80px;
+  width: 80px;
+  cursor: pointer;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup li.fb {
+  background-position: center 0;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup li.fb:hover {
+  background-position: center -80px;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup li.twitter {
+  background-position: center -160px;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup li.twitter:hover {
+  background-position: center -240px;
+}
+#footerBar #infoContainerWrapper #infoContainer .socialPopup li a {
+  display: block;
+  width: 80px;
+  height: 80px;
 }
 /* ----------- Tooltips ------------ */
 .tooltip {

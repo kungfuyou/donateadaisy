@@ -13,6 +13,9 @@ app.fb = {};
 app.donateintro = {};
 app.footer = {};
 app.tooltip = {};
+app.total = {};
+app.aboutus = {};
+app.bgimages = {};
 
 // -------- Helpers ---------  //
 (function(){
@@ -420,6 +423,46 @@ app.tooltip = {};
 	}
 }).apply(app.loading);
 
+// ------- Total Raised --------- //
+(function(){
+	var obj = this;
+
+	obj.init = function(){
+
+		obj.getTotalRaised();
+	};
+
+	obj.getTotalRaised = function(){
+
+		var getTotalRaised = $.ajax({
+
+			url : 'php/getTotal.php',
+			contentType : 'application/json',
+			error : function(result){
+				console.log(result.status + " : " + result.data);
+				obj.setRaisedAmount('error');
+			},
+			success : function(result){
+				result = jQuery.parseJSON(result);
+				console.log(result.status);
+				if(result.status = "success") {
+					totalRaised = result.data;
+					obj.setRaisedAmount(totalRaised);
+
+				} else {
+					console.log('the data did not return in the correct format');
+					obj.setRaisedAmount('error');
+				}	
+			}
+		});
+	}
+
+	obj.setRaisedAmount = function(totalRaised){
+		console.log(totalRaised);
+		$('#raisedAmount').html(totalRaised);
+	}
+}).apply(app.total);
+
 // -------- Daisy Chain --------- //
 (function(){
 
@@ -453,7 +496,6 @@ app.tooltip = {};
 
 		app.loading.init(app.contentId);
 		obj.getDaisyChainJSON();
-		obj.getTotalRaised();
 	}
 
 	obj.getDaisyChainJSON = function(){
@@ -490,6 +532,7 @@ app.tooltip = {};
 							complete : function(){
 
 								app.footer.showFooter();
+								app.bgimages.init();
 							}
 						}
 					);
@@ -501,31 +544,6 @@ app.tooltip = {};
 
 					obj.initDaisyOnScroll();
 
-
-				} else {
-
-					console.log('the data did not return in the correct format');
-				}	
-			}
-		});
-	}
-
-	obj.getTotalRaised = function(){
-
-		var getTotalRaised = $.ajax({
-
-			url : 'php/getTotal.php',
-			contentType : 'application/json',
-			error : function(result){
-				console.log(result.status + " : " + result.data);
-				//need some error handling here
-			},
-			success : function(result){
-				result = jQuery.parseJSON(result);
-
-				if(result.status = "success") {
-					totalRaised = result.data;
-					obj.setRaisedAmount(totalRaised);
 
 				} else {
 
@@ -725,11 +743,6 @@ app.tooltip = {};
 		return encodeURI(twitterMessage);
 	}
 
-	obj.setRaisedAmount = function(totalRaised){
-	
-		$('#raisedAmount').html(totalRaised);
-	}
-
 	obj.showDaisyMessage = function(daisy){
 
 		var daisyIndex = $(daisy).parents('li.daisyContainer').index() - 1;
@@ -767,6 +780,64 @@ app.tooltip = {};
 		return daisyData[index].donorDisplayName;
 	}
 }).apply(app.daisyChain);
+
+// -------- Sun and Clouds ------- //
+(function(){
+
+	var obj = this;
+
+	obj.init = function(){
+
+		obj.showSun();
+		obj.showClouds();
+		obj.popDaisies();
+	};
+
+	obj.showSun = function(){
+
+		$('#sun').velocity({
+			top : 10
+		},{
+			delay: 500,
+			easing : [500, 20]
+		});
+
+	}
+
+	obj.showClouds = function(){
+
+		$('#clouds').velocity({
+			top : 33
+		},{
+			delay: 1000,
+			easing : [400, 15]
+		});
+
+	}
+
+	obj.popDaisies = function(){
+
+		$('#dg1').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] });
+		$('#dg2').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 50 });
+		$('#dg3').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 100 });
+		$('#dg4').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 150 });
+		$('#dg5').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 200 });
+
+		$('#dg6').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 250 });
+		$('#dg7').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 300 });
+		$('#dg8').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 350 });
+		$('#dg9').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 400 });
+		$('#dg10').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 450 });
+
+		$('#dg11').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 500});
+		$('#dg12').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 550 });
+		$('#dg13').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 600 });
+		$('#dg14').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 650 });
+		$('#dg15').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 700 });
+
+		
+	}
+}).apply(app.bgimages);
 
 // -------- FaceBook API --------//
 (function(){
@@ -890,7 +961,7 @@ app.tooltip = {};
 
 	obj.cacheSelectors = function(){
 
-		obj.addDaisy = $('li.add');
+		obj.addDaisy = $('#daisyChain li.add');
 	}
 
 	obj.setRedirectMessage = function(){
@@ -1096,7 +1167,6 @@ app.tooltip = {};
 				clearTimeout(flyButterfly);
 			}, 2100);
 		});
-
 	}
 
 	obj.cleanUp = function(){
@@ -1187,41 +1257,255 @@ app.tooltip = {};
 	}
 }).apply(app.social);
 
+// -------- About Us ----------- //
+(function(){
+
+	var obj = this;
+	obj.story;
+
+	obj.init = function(){
+
+		obj.getStory();
+	};
+
+	obj.getStory = function(){
+
+		var getStory = $.ajax({
+
+			url : 'php/getStory.php',
+			contentType : 'application/json',
+			error : function(result){
+				console.log(result.status + " : " + result.data);
+				obj.story = 'ERROR : unable to retrieve data from server';
+			},
+			success : function(result){
+
+				result = JSON.parse(result);
+				console.log(result);
+
+				if(result.status = "success") {
+
+					obj.story = result.data;
+
+				} else {
+					console.log('the data did not return in the correct format');
+					obj.story = 'ERROR : unable to retrieve data from server';
+				}	
+			}
+		});
+	}
+}).apply(app.aboutus);
+
 // -------- Footer ------------ //
 (function(){
 
 	var obj = this;
 	var templateContainer;
+	var addClicked;
+	var infoContainerWrapper = '#infoContainerWrapper';
+	var infoContainer = '#infoContainer';
+	var socialContainer = '#socialContainer';
+	var infoOpen = false;
+	var infoOpenId;
+	var socialOpen = false;
+	var messageHeight;
+	var twitterMessage = encodeURI("Add a daisy to Cancer Connections Daisy Chain in memory of a loved one!");
+	var socialContainerHTML = "<div id='socialContainer'></div>";
 
 	obj.init = function() {
 
 		obj.addFooterTemplate();
+		obj.addDependencies();
+
+		//remove
+		//obj.showFooter();
 	};
 
-	obj.cacheSelectors = function(){};
+	obj.cacheSelectors = function(){
+	};
 
 	obj.addDependencies = function(){
-		console.log('wdcsd');
+
+		$(app.contentId).on("click", "#footerNav li" , function(e){
+
+			var clickedId = $(this).attr('id');
+			var callback;
+			$('#footerNav li').removeClass('open');
+			
+			if(infoOpen) {
+
+				$('#footerNav li').removeClass('open');
+				if(clickedId != infoOpenId) {
+
+					callback = obj.getCallback(clickedId);
+					$(this).addClass('open');
+				}
+
+				obj.closeMessage(this, callback);
+
+			} else {
+				
+				callback = obj.getCallback(clickedId);
+				callback();
+				$(this).addClass('open');
+			}
+
+			infoOpenId = clickedId;
+		});
+
+		$(app.contentId).on('click' , '#footerNav .add' , function(){
+			//scroll back to start
+			if(!addClicked){
+
+				addClicked = true;
+				currentX = app.daisyChain.daisyScroll.x;
+
+				$("#daisyChain").velocity({
+
+					translateX : [0, currentX]
+				},{
+					duration : 750,
+					ease : "easeOutQuad",
+					complete : function(){
+
+						app.daisyChain.daisyScroll.x = 0;
+						app.donate.init();
+					}
+				});
+			}
+		});
+
+		$(app.contentId).on('click' , '#infoContainerWrapper .close' , function(){
+
+			obj.closeMessage();
+			$('#footerNav li').removeClass('open');
+		});
 	};
+
+	obj.getCallback = function(clickedId){
+
+		switch (clickedId) {
+
+			case 'footerAdd' :
+				callback = obj.addDaisyCallback;
+			break;
+
+			case 'footerAbout' :
+				callback = obj.addMessageCallback;
+			break;
+
+			case 'footerSocial' :
+				callback = obj.addSocialCallback;
+			break;
+		}
+
+		return callback;
+	}
+
+	obj.addMessageCallback = function(){
+
+		var templateContainer = $(infoContainer);
+		var templateSource = $(aboutUsTemplate).html();
+		var template = Handlebars.compile(templateSource);
+		var templateContent = template({info : app.aboutus.story});
+		$(templateContainer).append(templateContent);
+		//app.tooltip.removeToolTip(this);
+		messageHeight = 395;
+		obj.showMessage();	
+	}
+
+	obj.addDaisyCallback = function(){
+
+		console.log('add the daisy stuff');
+	}
+
+	obj.addSocialCallback = function(){
+		
+		var clicked = $('#footerSocial');
+		var templateContainer = $(infoContainer);
+		messageHeight = 123;
+
+		app.social.loadShareBubble(clicked, templateContainer, twitterMessage);	
+		app.social.addShareDependencies();
+		obj.showMessage();
+	}
+
+	obj.closeSocialContainer = function(){
+
+		$('#footerNav .social').removeClass('open');
+		$(socialContainer).velocity(
+			{ 
+				height : 0,
+			},{
+
+				duration: 400,
+				complete : function(){
+					$(socialContainer).remove();
+					socialOpen = false;
+				}
+			}
+		);
+	}
+
+	obj.showMessage = function(){
+
+		//$(clicked).addClass('open');
+		$(infoContainerWrapper).velocity(
+			{ 
+				height : [messageHeight, 0],
+		
+			},{
+
+				duration: 400
+			}
+		);
+
+		infoOpen = true;
+	};
+
+	obj.closeMessage = function(clicked, callback){
+		
+		$(infoContainerWrapper).velocity(
+			{ 
+				height : 0,
+			},{
+
+				duration: 400,
+				complete : function(){
+
+					$(infoContainer).empty();
+					if(callback){
+
+						callback();
+					}
+				}
+			}
+		);	
+
+		infoOpen = false;
+	}
 
 	obj.addFooterTemplate = function(){
 
-		templateContainer = app.contentId;
+		var templateContainer = app.contentId;
 		var templateSource = $(footerBarTemplate).html();
 		var template = Handlebars.compile(templateSource);
 		var templateContent = template();
-		$(templateContainer).append(templateContent);
-		obj.addDependencies();
+		$(templateContainer).append(templateContent);	
 	};
 
 	obj.showFooter = function(){
 
 		$('#footerBar').velocity({
 
-			translateY : [0, 80],
+			height : [80, 0],
 			opacity: 1
 		},{
-			duration: 600
+			duration: 600,
+			complete : function(){
+
+				$('#footerBar').css({overflow : 'visible'});
+			}
 		});
 	};
 }).apply(app.footer);
@@ -1242,11 +1526,13 @@ app.tooltip = {};
 	obj.addDependencies = function(){
 	
 		$(app.contentId).on("mouseenter" , hasToolTip , function(){
-
-			obj.addToolTip(this);
+			
+			if(!$(this).hasClass('open')){
+				obj.addToolTip(this);
+			}
 		});
 
-		$(app.contentId).on("mouseleave" , hasToolTip , function(){
+		$(app.contentId).on("mouseleave click" , hasToolTip , function(){
 			
 			clearTimeout(showToolTip);
 			obj.removeToolTip(this);
@@ -1304,9 +1590,6 @@ app.tooltip = {};
 		});
 
 	}
-
-
-
 }).apply(app.tooltip);
 
 // --------  The main app controller --------- //
@@ -1341,6 +1624,8 @@ app.tooltip = {};
 		}
 
 		app.daisyChain.init();
+		app.total.getTotalRaised();
+		app.aboutus.init();
 		app.fb.init();
 		app.footer.init();
 		app.tooltip.init();
@@ -1354,5 +1639,6 @@ app.tooltip = {};
 
 // --------  The main app controller Stuff to sort --------- //
 $(document).ready( function(){
+
 	app.init();
 });
