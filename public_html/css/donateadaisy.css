@@ -428,7 +428,7 @@ body strong em {
 }
 #content {
   height: 100%;
-  min-height: 660px;
+  min-height: 680px;
   position: relative;
 }
 /* ----------- Intro -------------- */
@@ -809,10 +809,42 @@ body strong em {
   transform: rotate(-8deg) scale(0);
   width: 75px;
 }
+#hint {
+  color: #fff;
+  font-family: 'robotolight', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 11px;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: 547px;
+  width: 200px;
+}
+#hint #hint-drag:before {
+  width: 10px;
+  height: 8px;
+  background: url('../img/hint-arrow-l.png') center center no-repeat;
+  display: block;
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: -5px;
+}
+#hint #hint-drag:after {
+  width: 10px;
+  height: 8px;
+  background: url('../img/hint-arrow-r.png') center center no-repeat;
+  display: block;
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: -5px;
+}
 /* ---------- Daisy Chain -------------- */
 #daisyChainMaster {
   position: absolute;
-  top: 280px;
+  top: 250px;
   width: 100%;
   height: 290px;
 }
@@ -824,6 +856,7 @@ body strong em {
   height: 165px;
   padding: 60px 0 0 ;
   z-index: 2;
+  cursor: url('../img/cursor-hand.png'), auto;
   /* Prevent native touch events on Windows */
   -ms-touch-action: none;
   /* Prevent the callout on tap-hold and text selection */
@@ -838,7 +871,9 @@ body strong em {
   -ms-text-size-adjust: none;
   -o-text-size-adjust: none;
   text-size-adjust: none;
-  /* Custom Cursor Base 64 Encoded */
+}
+#daisyChainMaster #daisyChainContainer.grabCursor {
+  cursor: url('../img/cursor-grab.png'), auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain {
   padding: 0 0 0px 195px;
@@ -879,6 +914,7 @@ body strong em {
   -moz-transform-origin: 50%, 50%;
   -o-transform-origin: 50%, 50%;
   -webkit-transform-origin: 50%, 50%;
+  cursor: url('../img/cursor-message.png'), auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo {
   background: url('../img/daisy-shadow.png') no-repeat center center;

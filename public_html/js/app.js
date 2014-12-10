@@ -635,9 +635,9 @@ app.bgimages = {};
 		var newLeftNeighbourWidth = startWidthPercent + (leftNeighbourPercentFromCentre * diffWidthPercent);
 		
 
-		$('#daisyChain > li:eq(' + currentZeroIndex + ') .daisy').css({ 'transform' : 'scale(' + newWidth + ',' + newHeight + ')' });
-		$('#daisyChain > li:eq(' + (currentZeroIndex + 1) + ') .daisy').css({ 'transform' : 'scale(' + newRightNeighbourWidth + ',' + newRightNeighbourHeight + ')' });
-		$('#daisyChain > li:eq(' + (currentZeroIndex - 1) + ') .daisy').css({ 'transform' : 'scale(' + newLeftNeighbourWidth + ',' + newLeftNeighbourHeight + ')' });
+		$('#daisyChain > li:eq(' + currentZeroIndex + ') .daisy:not(.daisy-add)').css({ 'transform' : 'scale(' + newWidth + ',' + newHeight + ')' });
+		$('#daisyChain > li:eq(' + (currentZeroIndex + 1) + ') .daisy:not(.daisy-add)').css({ 'transform' : 'scale(' + newRightNeighbourWidth + ',' + newRightNeighbourHeight + ')' });
+		$('#daisyChain > li:eq(' + (currentZeroIndex - 1) + ') .daisy:not(.daisy-add)').css({ 'transform' : 'scale(' + newLeftNeighbourWidth + ',' + newLeftNeighbourHeight + ')' });
 	}
 
 	obj.resetDaisySize = function(){
@@ -703,6 +703,18 @@ app.bgimages = {};
 				app.donate.init();
 			}
 		})
+
+		$(daisyWrapper).on('mousedown' , function(){
+
+			$(this).addClass('grabCursor');
+		});
+
+		$(daisyWrapper).on('mouseup' , function(){
+
+			$(this).removeClass('grabCursor');
+		});
+
+
 	}
 
 	obj.addMessageDependencies = function(){
@@ -791,6 +803,7 @@ app.bgimages = {};
 		obj.showSun();
 		obj.showClouds();
 		obj.popDaisies();
+		obj.showHint();
 	};
 
 	obj.showSun = function(){
@@ -834,9 +847,17 @@ app.bgimages = {};
 		$('#dg13').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 600 });
 		$('#dg14').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 650 });
 		$('#dg15').velocity({scale: [1, 0]},{ duration: 300 , easing: [100, 10] , delay: 700 });
-
-		
 	}
+
+	obj.showHint = function(){
+
+		$('#hint').velocity({
+			opacity : 0.8
+		} , {
+			delay: 1000
+		});
+	}
+
 }).apply(app.bgimages);
 
 // -------- FaceBook API --------//
@@ -1570,7 +1591,6 @@ app.bgimages = {};
 			duration : 200,
 			easing : [100, 15]
 		});
-
 	}
 
 	obj.removeToolTip = function(ele){
