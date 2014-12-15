@@ -610,7 +610,7 @@ body {
 	   // overflow: hidden;
 		padding: 60px 0 0 ;
 		z-index: 2;
-		cursor: url('@{img-path}cursor-hand.png'), auto;
+		cursor: url('@{img-path}cursor-hand.png') 16 8, auto;
 
 		/* Prevent native touch events on Windows */
 		-ms-touch-action: none;
@@ -629,7 +629,7 @@ body {
 
 		&.grabCursor {
 
-			cursor: url('@{img-path}cursor-grab.png'), auto;
+			cursor: url('@{img-path}cursor-grab.png') 16 8, auto;
 		}
 		
 		#daisyChain{
@@ -680,7 +680,7 @@ body {
 					-o-transform-origin : 50%, 50%;
 					-webkit-transform-origin : 50%, 50%;
 
-					cursor: url('@{img-path}cursor-message.png'), auto;
+					cursor: url('@{img-path}cursor-message.png') 16 8, auto;
 				}
 
 				.daisyInfo {
@@ -729,7 +729,7 @@ body {
 								&:hover {
 
 									background-position: 0 -41px;
-									cursor: pointer;
+									cursor: url('@{img-path}cursor-pointer.png') 16 8, auto;
 								}
 
 							}
@@ -757,13 +757,13 @@ body {
 									&:hover {
 
 										background-position: -9px -114px;
-										cursor: pointer;	
+										cursor: url('@{img-path}cursor-pointer.png') 16 8, auto;
 									}
 
 									&.open {
 
 										background-position: -9px -330px;
-										cursor: pointer;
+										cursor: url('@{img-path}cursor-pointer.png') 16 8, auto;
 									}
 								}
 							}
@@ -789,6 +789,11 @@ body {
 
 				background-image: url('@{img-path}daisy-stem-add-r.png');
 
+				.daisy-add {
+
+					cursor: url('@{img-path}cursor-pointer.png') 16 8, auto;
+				}
+
 				.daisy-add-icon {
 
 					left: 69px;
@@ -796,6 +801,9 @@ body {
 					position: absolute;
 					top: 55px;
 					z-index: 1;
+
+					cursor: url('@{img-path}cursor-pointer.png') 16 8, auto;
+					
 				}
 
 				.pill {
@@ -813,7 +821,10 @@ body {
 					width: 85px;
 					text-align: center;
 
+					cursor: url('@{img-path}cursor-pointer.png') 16 8, auto;
+
 					&.redirect {
+
 						background-image : none;
 
 						&:after{

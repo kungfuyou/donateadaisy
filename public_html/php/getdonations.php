@@ -34,10 +34,10 @@ function cleanDonationsArray($donationsArray) {
 			}
 		}
 		//if display name is anonymous
-		/* if($obj->donorDisplayName == 'Anonymous'){
+		if($obj->donorDisplayName == 'Anonymous'){
 
 			$obj->donorDisplayName = $obj->donorRealName;
-		} */
+		};
 
 		//add the index as id before reversing
 		$obj->id = $totalResults - $i;

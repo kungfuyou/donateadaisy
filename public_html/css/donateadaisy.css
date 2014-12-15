@@ -856,7 +856,7 @@ body strong em {
   height: 165px;
   padding: 60px 0 0 ;
   z-index: 2;
-  cursor: url('../img/cursor-hand.png'), auto;
+  cursor: url('../img/cursor-hand.png') 16 8, auto;
   /* Prevent native touch events on Windows */
   -ms-touch-action: none;
   /* Prevent the callout on tap-hold and text selection */
@@ -873,7 +873,7 @@ body strong em {
   text-size-adjust: none;
 }
 #daisyChainMaster #daisyChainContainer.grabCursor {
-  cursor: url('../img/cursor-grab.png'), auto;
+  cursor: url('../img/cursor-grab.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain {
   padding: 0 0 0px 195px;
@@ -914,7 +914,7 @@ body strong em {
   -moz-transform-origin: 50%, 50%;
   -o-transform-origin: 50%, 50%;
   -webkit-transform-origin: 50%, 50%;
-  cursor: url('../img/cursor-message.png'), auto;
+  cursor: url('../img/cursor-message.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo {
   background: url('../img/daisy-shadow.png') no-repeat center center;
@@ -953,7 +953,7 @@ body strong em {
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.message:hover {
   background-position: 0 -41px;
-  cursor: pointer;
+  cursor: url('../img/cursor-pointer.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.noMessage {
   background: url("../img/daisychain-icons.png") no-repeat scroll 0 -292px rgba(0, 0, 0, 0);
@@ -973,11 +973,11 @@ body strong em {
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share button:hover {
   background-position: -9px -114px;
-  cursor: pointer;
+  cursor: url('../img/cursor-pointer.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info li.share button.open {
   background-position: -9px -330px;
-  cursor: pointer;
+  cursor: url('../img/cursor-pointer.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain > li .daisyInfo .info .socialPopup li {
   height: 32px;
@@ -989,12 +989,16 @@ body strong em {
 #daisyChainMaster #daisyChainContainer #daisyChain li.add {
   background-image: url('../img/daisy-stem-add-r.png');
 }
+#daisyChainMaster #daisyChainContainer #daisyChain li.add .daisy-add {
+  cursor: url('../img/cursor-pointer.png') 16 8, auto;
+}
 #daisyChainMaster #daisyChainContainer #daisyChain li.add .daisy-add-icon {
   left: 69px;
   padding: 10px;
   position: absolute;
   top: 55px;
   z-index: 1;
+  cursor: url('../img/cursor-pointer.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain li.add .pill {
   background-image: url('../img/daisy-head-add-icon.png');
@@ -1009,6 +1013,7 @@ body strong em {
   top: 180px;
   width: 85px;
   text-align: center;
+  cursor: url('../img/cursor-pointer.png') 16 8, auto;
 }
 #daisyChainMaster #daisyChainContainer #daisyChain li.add .pill.redirect {
   background-image: none;

@@ -19,7 +19,7 @@ function getTotal() {
 
 			$raisedAmount = number_format($value->raisedAmount, 2, '.', '');
 			$currency = htmlentities($value->currencySymbol);
-			$totalRaised = $currency . $raisedAmount;
+			$totalRaised = '£' . $raisedAmount;
 			return $totalRaised;
 		}
 	}

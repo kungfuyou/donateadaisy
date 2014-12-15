@@ -713,8 +713,6 @@ app.bgimages = {};
 
 			$(this).removeClass('grabCursor');
 		});
-
-
 	}
 
 	obj.addMessageDependencies = function(){
@@ -791,6 +789,11 @@ app.bgimages = {};
 
 		return daisyData[index].donorDisplayName;
 	}
+
+	obj.getDaisyMessage = function(index){
+
+		return daisyData[index].message;
+	}
 }).apply(app.daisyChain);
 
 // -------- Sun and Clouds ------- //
@@ -857,7 +860,6 @@ app.bgimages = {};
 			delay: 1000
 		});
 	}
-
 }).apply(app.bgimages);
 
 // -------- FaceBook API --------//
@@ -868,6 +870,7 @@ app.bgimages = {};
 	var accessToken;
 	var signedRequest;
 	var userID;
+	obj.shareData;
 
 	obj.init = function(){
 
@@ -890,70 +893,98 @@ app.bgimages = {};
 		   }(document, 'script', 'facebook-jssdk'));
 	}
 
-	obj.shareDaisy = function(){
+	obj.getFBLoginStatus = function(shareData){
+
+		obj.shareData = shareData;
 
 		FB.getLoginStatus(function(response) {
+
 			obj.checkStatus(response);
+
 		});
 	}
 
 	obj.checkStatus = function(response) {
 
-		status = response.status //connected , not_authorized, unknown.
-		console.log(status); 
+		var status = response.status //connected , not_authorized, unknown.
+		var shareType = obj.shareData.type;
+		//console.log(status); 
+		//console.log(obj.shareData);
 
 		if(status == 'connected'){
 
-			//Get the auth Response
+			//Get the auth Response - not needed??
 			authResponse = response.authResponse;
 			accessToken = authResponse.accessToken;
 			signedRequest = authResponse.signedRequest;
 			userID = authResponse.userID;
 
-			console.log('accessToken : ' + accessToken);
-			console.log('signedRequest : ' + signedRequest);
-			console.log('userID : ' + userID);
+			//console.log('accessToken : ' + accessToken);
+			//console.log('signedRequest : ' + signedRequest);
+			//console.log('userID : ' + userID);
 
-			FB.ui({
-				method : 'share_open_graph',
-				action_type : 'donateadaisy:share',
-				action_properties : JSON.stringify({
-					//daisy : 'http://samples.ogp.me/309472862591217',
-					daisy : 'http://kungfuyou.com/donateadaisy',
-					image : 'http://kungfuyou.com/donateadaisy/img/daisy-head.png' ,
-					daisy_id : 4,
-					message : 'the daisy message goes here',
-					title : 'Use this as a title'
-				})
-			});
+			/* Set up Share Daisy FB Message */
 
-			/* FB.api(
-				'me/objects/donateadaisy:daisy',
-				'post',
-				{
-					object : {'fb:app_id'	: 309471525924684, 'og:url' : 'http://donateadaisy.dev',
-					'og:title' : 'Dasiy Number Whatever',
-					'og:type'	: 'donateadaisy:daisy',
-					'og:image'	: 'https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png',
-					'og:description'	: 'my description'}
-					
-					
-				},
-				function(response) {
-					console.log(response);
-				} 
-			);*/
+			if(shareType == "daisy") {
+
+				obj.shareDaisy();
+
+			} else if (shareType == "footer") {
+
+				obj.shareFooter();
+
+			} else if (shareType == "donation") {
+
+				obj.shareDonation();
+			}
 		
 		} else {
 
 			//prompt login
 			FB.login(function(response){
 
-			  console.log(response);
+			  obj.checkStatus(response);
 			  
 			});
 		}
+	}
+	//Share a daisy on FB
+	obj.shareDaisy = function(){
 
+		FB.ui({
+			method : 'share_open_graph',
+			action_type : 'donateadaisy:share',
+			action_properties : JSON.stringify({
+				daisy : 'http://www.donateadaisy.org',
+				daisy_id : obj.shareData.daisy_id,
+				message : obj.shareData.message,
+				donor : obj.shareData.donor
+			})
+		});
+	}
+	//Share from Footer on FB
+	obj.shareFooter = function(){
+
+		FB.ui({
+			method : 'share_open_graph',
+			action_type : 'donateadaisy:share',
+			action_properties : JSON.stringify({
+				daisy : 'http://www.donateadaisy.org',
+				message : app.social.defaultFBMessage
+			})
+		});
+	}
+	//Share after donation
+	obj.shareDonation = function(){
+
+		FB.ui({
+			method : 'share_open_graph',
+			action_type : 'donateadaisy:add',
+			action_properties : JSON.stringify({
+				daisy : 'http://www.donateadaisy.org',
+				message : app.social.donationFBMessage
+			})
+		});
 	}
 }).apply(app.fb);
 
@@ -961,10 +992,10 @@ app.bgimages = {};
 (function(){
 
 	var obj = this;
-	var appUrl = 'http://donateadaisy.dev';
-	var jgUrl = 'http://v3-sandbox.justgiving.com/';
+	var appUrl = 'http://donateadaisy.org';
+	var jgUrl = 'http://www.justgiving.com/';
 	var shortUrl = 'donateadaisy/';
-	var suggestedAmount = 20;
+	var suggestedAmount = '2.00';
 	var currency = 'GBP';
 	var exitUrl = encodeURI(appUrl + '?donationId=JUSTGIVING-DONATION-ID');
 	var redirectMessage = 'You will now be taken to JustGiving to make your donation';
@@ -1205,6 +1236,9 @@ app.bgimages = {};
 	var obj = this;
 	var socialPopupClass = '.socialPopup';
 	var twitterUrl = encodeURIComponent("http://donateadaisy.org");
+	obj.defaultFBMessage = "Add a daisy to our daisy chain to support family and friends affected by cancer or in memory of a loved one.";
+	obj.donationFBMessage = "I have just added a daisy to Cancer Connections Daisy Chain! Read my message and add your own http://donateadaisy.org";
+
 
 	obj.closeShareBubble = function(){
 
@@ -1267,9 +1301,62 @@ app.bgimages = {};
 
 	obj.addShareDependencies = function(){
 		
-		$('.fb').on("click" , function(e){
-			console.log('facecook');
-			//var fbLoginStatus = app.fb.shareDaisy();
+		//Add Daisy FB Share
+		$('.daisyInfo .fb , .messageButtons .fb').on("click" , function(e){
+
+			var shareData;
+			var fbLoginStatus;
+			var parentElem = $(this).parents('li');
+			var daisyIndex = app.daisyChain.getDaisyIndex(parentElem);
+			var donationID = app.daisyChain.getDonationId(daisyIndex);
+			var donorDisplayName = app.daisyChain.getDonorDisplayName(donationID);
+
+			var donationMessage = app.daisyChain.getDaisyMessage(donationID);
+
+			if(!donationMessage || donationMessage.length == 0) {
+
+				donationMessage = obj.defaultFBMessage;
+
+			} else {
+
+				donationMessage = "'" + donationMessage + "'";
+			}
+
+			shareData = {
+				'type' : 'daisy',
+				'daisy_id' : daisyIndex,
+				'donor' : donorDisplayName,
+				'message' : donationMessage
+			}
+
+
+			fbLoginStatus = app.fb.getFBLoginStatus(shareData);
+		});
+
+		//Share from the footer
+		$('#footerBar .fb').on("click" , function(e){
+
+			var shareData;
+			var fbLoginStatus;
+
+			var shareData = {
+				'type' : 'footer'
+			}
+
+			fbLoginStatus = app.fb.getFBLoginStatus(shareData);
+		});
+
+		//Share after donation
+		$('#donate-share-wrapper .fb').on("click", function(){
+
+			var shareData;
+			var fbLoginStatus;
+
+			var shareData = {
+				'type' : 'donation'
+			}
+
+			fbLoginStatus = app.fb.getFBLoginStatus(shareData);
 		});
 
 		//Create Twitter Button
